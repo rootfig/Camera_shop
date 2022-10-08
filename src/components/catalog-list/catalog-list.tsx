@@ -1,6 +1,10 @@
+import CatalogItem from '../catalog-item/catalog-item';
+
 function CatalogList() {
   return (
-    <div>catalog-list</div>
+    <div className="cards catalog__cards">
+      <CatalogItem />
+    </div>
   );
 }
 
