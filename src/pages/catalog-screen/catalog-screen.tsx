@@ -10,7 +10,7 @@ function CatalogScreen(): JSX.Element {
         <meta name="description" content="Фотошоп — Интернет-магазин фото- и видеотехники" />
       </Helmet>
       <Header />
-      <p>Каталог товаров</p>;
+      <p>Каталог товаров</p>
       <Footer />
     </div>
   );
