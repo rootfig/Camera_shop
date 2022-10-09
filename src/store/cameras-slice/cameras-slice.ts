@@ -16,7 +16,7 @@ export const camerasSlice = createSlice({
   reducers: {
     changeType: (state, action) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state.cameras = action.payload ?? CamerasFilters.ALL.type;
+      state.cameras = action.payload;
     },
   },
   extraReducers(builder) {

@@ -2,6 +2,8 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Banner from '../../components/banner/banner';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { RouteName } from '../../constants';
+import { Link } from 'react-router-dom';
 
 function NotFoundScreen(): JSX.Element {
   return(
@@ -20,7 +22,8 @@ function NotFoundScreen(): JSX.Element {
 
           <div className="page-content">
 
-            <h1>404 Страница не найдена</h1>
+            <p >404 Страница не найдена</p>
+            <Link style={{fontSize: 40}} to={RouteName.Cameras}> Вернуться в каталог</Link>
           </div>
         </main>
 
