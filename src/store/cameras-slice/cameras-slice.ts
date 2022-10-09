@@ -16,12 +16,13 @@ export const camerasSlice = createSlice({
   reducers: {
     changeType: (state, action) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state.type = action.payload ?? CamerasFilters.ALL.type;
+      state.cameras = action.payload ?? CamerasFilters.ALL.type;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCamerasAction.pending, (state) => {
+      .addCase(fetchCamerasAction.pending, (state, action) => {
+        state.cameras = action.payload;
         state.isLoaded = true;
         state.isLoadError = false;
       })

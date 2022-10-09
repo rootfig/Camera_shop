@@ -1,8 +1,8 @@
-export const BACKEND_URL = 'camera-shop.accelerator.pages.academy/';
+export const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 export const REQUEST_TIMEOUT = 5000;
 
 export const RouteName = {
-  Main: '/cameras',
+  Cameras: '/cameras',
   CamerasDetailed: {
     path: '/cameras/:id',
     name: 'cameras'
@@ -26,4 +26,9 @@ export const CamerasFilters = {
   CAMERAS_TYPES: ['Цифровая', 'Плёночная', 'Моментальная', 'Коллекционная'],
   CAMERAS_LEVELS: ['Нулевой', 'Любительский', 'Профессиональный'],
 };
+
+export enum NameSpace {
+  Cameras = 'Cameras',
+  Camera = 'Camera',
+}
 

@@ -7,20 +7,13 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { fetchCamerasAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
 
-function CatalogScreen(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const data = dispatch(fetchCamerasAction());
-  // eslint-disable-next-line no-console
-  console.log(data);
-
+function ProductScreen(): JSX.Element {
   return(
     <HelmetProvider>
       <div className="wrapper">
         <Helmet>
-          <title>Каталог - Фотошоп</title>
+          <title>Продукт - Фотошоп</title>
           <meta name="description" content="Фотошоп — Интернет-магазин фото- и видеотехники" />
         </Helmet>
 
@@ -63,4 +56,4 @@ function CatalogScreen(): JSX.Element {
   );
 }
 
-export default CatalogScreen;
+export default ProductScreen;

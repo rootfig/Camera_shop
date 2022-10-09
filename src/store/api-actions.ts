@@ -15,7 +15,7 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
 }>(
   ApiAction.FetchCameras,
   async (_arg, { extra: api}) => {
-    const { data } = await api.get<Camera[]>(RouteName.Main);
+    const { data } = await api.get<Camera[]>(RouteName.Cameras);
     return data;
   }
 );

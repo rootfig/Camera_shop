@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { NameSpace } from '../constants';
 import { camerasSlice } from './cameras-slice/cameras-slice';
 
 export const rootReducer = combineReducers({
-  'Cameras': camerasSlice.reducer
+  [NameSpace.Cameras]: camerasSlice.reducer
 });
