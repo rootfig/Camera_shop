@@ -9,6 +9,7 @@ import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import { selectCameras } from '../../store/cameras-slice/selectorts';
+import { getProductSlice } from '../../utils/utils';
 
 function CatalogScreen(): JSX.Element {
 
@@ -46,7 +47,7 @@ function CatalogScreen(): JSX.Element {
 
                     <CatalogSort />
 
-                    <CatalogList cameras={cameras} />
+                    <CatalogList cameras={getProductSlice(cameras)} />
 
                     <Pagination />
 
