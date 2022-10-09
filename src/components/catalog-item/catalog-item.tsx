@@ -5,13 +5,13 @@ type CatalogItemProps = {
 }
 
 function CatalogItem({camera}: CatalogItemProps) {
-  const { name, rating, price } = camera;
+  const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet="img/content/img1.webp, img/content/img1@2x.webp 2x" />
-          <img src="img/content/img1.jpg" srcSet="img/content/img1@2x.jpg 2x" width="280" height="240" alt="Ретрокамера «Das Auge IV»" />
+          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`} />
+          <img src={previewImg} srcSet={previewImg2x} width="280" height="240" alt={ name } />
         </picture>
       </div>
       <div className="product-card__info">
@@ -32,7 +32,7 @@ function CatalogItem({camera}: CatalogItemProps) {
             <use xlinkHref="#icon-star"></use>
           </svg>
           <p className="visually-hidden">Рейтинг: { rating }</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>23</p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{ reviewCount }</p>
         </div>
         <p className="product-card__title">{ name }</p>
         <p className="product-card__price">
