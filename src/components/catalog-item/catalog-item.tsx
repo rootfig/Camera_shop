@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
+import { RouteName } from '../../constants';
 import { Camera } from '../../types/camera';
-import { getProductUrl } from '../../utils/utils';
 
 type CatalogItemProps = {
   camera: Camera;
 }
 
 function CatalogItem({camera}: CatalogItemProps) {
-  const { id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+  const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -44,7 +44,7 @@ function CatalogItem({camera}: CatalogItemProps) {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={ getProductUrl(id) }>Подробнее
+        <Link className="btn btn--transparent" to={ RouteName.CamerasDetailed.path }>Подробнее
         </Link>
       </div>
     </div>
