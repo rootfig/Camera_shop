@@ -1,4 +1,11 @@
-function CatalogItem() {
+import { Camera } from '../../types/camera';
+
+type CatalogItemProps = {
+  camera: Camera;
+}
+
+function CatalogItem({camera}: CatalogItemProps) {
+  const { name, rating, price } = camera;
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -24,11 +31,12 @@ function CatalogItem() {
           <svg width="17" height="16" aria-hidden="true">
             <use xlinkHref="#icon-star"></use>
           </svg>
-          <p className="visually-hidden">Рейтинг: 3</p>
+          <p className="visually-hidden">Рейтинг: { rating }</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>23</p>
         </div>
-        <p className="product-card__title">Ретрокамера «Das Auge IV»</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>73 450 ₽
+        <p className="product-card__title">{ name }</p>
+        <p className="product-card__price">
+          <span className="visually-hidden">Цена:</span>{ price } ₽
         </p>
       </div>
       <div className="product-card__buttons">

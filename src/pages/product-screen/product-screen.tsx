@@ -4,7 +4,7 @@ import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
-import CatalogList from '../../components/catalog-list/catalog-list';
+// import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
@@ -38,7 +38,7 @@ function ProductScreen(): JSX.Element {
 
                     <CatalogSort />
 
-                    <CatalogList />
+                    {/* <CatalogList cameras={cameras} /> */}
 
                     <Pagination />
 

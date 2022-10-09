@@ -1,9 +1,19 @@
+import { Camera } from '../../types/camera';
 import CatalogItem from '../catalog-item/catalog-item';
 
-function CatalogList() {
+type CatalogListProps = {
+  cameras: Camera[];
+}
+
+function CatalogList( {cameras}: CatalogListProps ) {
   return (
     <div className="cards catalog__cards">
-      <CatalogItem />
+      {cameras.map((camera) =>
+        (
+          <CatalogItem
+            key={camera.id}
+            camera={camera}
+          />))}
     </div>
   );
 }

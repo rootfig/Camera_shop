@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CamerasFilters } from '../../constants';
+import { CamerasFilters, NameSpace } from '../../constants';
 import { CamerasSliceState } from '../../types/state';
 import { fetchCamerasAction } from '../api-actions';
 
@@ -11,7 +11,7 @@ const initialState: CamerasSliceState = {
 };
 
 export const camerasSlice = createSlice({
-  name: 'cameras',
+  name: NameSpace.Cameras,
   initialState,
   reducers: {
     changeType: (state, action) => {
@@ -21,8 +21,7 @@ export const camerasSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCamerasAction.pending, (state, action) => {
-        state.cameras = action.payload;
+      .addCase(fetchCamerasAction.pending, (state) => {
         state.isLoaded = true;
         state.isLoadError = false;
       })

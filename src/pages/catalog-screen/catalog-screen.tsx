@@ -7,14 +7,15 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { fetchCamerasAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
+import { selectCameras } from '../../store/cameras-slice/selectorts';
 
 function CatalogScreen(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const data = dispatch(fetchCamerasAction());
+
+  const cameras = useAppSelector(selectCameras);
+
   // eslint-disable-next-line no-console
-  console.log(data);
+  console.log(cameras);
 
   return(
     <HelmetProvider>
@@ -45,7 +46,7 @@ function CatalogScreen(): JSX.Element {
 
                     <CatalogSort />
 
-                    <CatalogList />
+                    <CatalogList cameras={cameras} />
 
                     <Pagination />
 

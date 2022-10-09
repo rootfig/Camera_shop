@@ -10,12 +10,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-store.dispatch(fetchCamerasAction);
+store.dispatch(fetchCamerasAction());
 
 root.render(
   <React.StrictMode>
 
-    <Provider store={store}>
+    <Provider store={store} >
       <BrowserRouter>
         <App />
       </BrowserRouter>
