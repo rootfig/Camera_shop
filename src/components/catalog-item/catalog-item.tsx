@@ -8,6 +8,7 @@ type CatalogItemProps = {
 
 function CatalogItem({camera}: CatalogItemProps) {
   const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+
   return (
     <div className="product-card">
       <div className="product-card__img">
