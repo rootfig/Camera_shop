@@ -15,9 +15,6 @@ function CatalogScreen(): JSX.Element {
 
   const cameras = useAppSelector(selectCameras);
 
-  // eslint-disable-next-line no-console
-  console.log(cameras);
-
   return(
     <HelmetProvider>
       <div className="wrapper">
