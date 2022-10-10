@@ -9,5 +9,10 @@ export type CamerasSliceState = {
   cameras: Camera[];
   isLoaded: boolean;
   isLoadError: boolean;
-  type: string;
+}
+
+export type CameraSliceState = {
+  camera: Camera;
+  isLoaded: boolean;
+  isLoadError: boolean;
 }

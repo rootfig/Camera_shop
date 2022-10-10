@@ -6,6 +6,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const ApiAction = {
   FetchCameras: 'data/fetchCameras',
+  FetchCamera: 'data/fetchCamera',
 };
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
@@ -16,6 +17,16 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   ApiAction.FetchCameras,
   async (_arg, { extra: api}) => {
     const { data } = await api.get<Camera[]>(RouteName.Cameras);
+    return data;
+  }
+);
+
+export const fetchCameraAction = createAsyncThunk<Camera, string, {
+  extra: AxiosInstance;
+}>(
+  ApiAction.FetchCamera,
+  async (id: string, {extra: api}) => {
+    const {data} = await api.get<Camera>(`${ RouteName.CamerasDetailed.name }/${ id }`);
     return data;
   }
 );
