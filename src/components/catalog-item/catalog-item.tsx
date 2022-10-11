@@ -9,12 +9,24 @@ type CatalogItemProps = {
 
 function CatalogItem({camera}: CatalogItemProps) {
   const { id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+
+  // eslint-disable-next-line no-console
+  console.log(camera.previewImg);
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${ previewImgWebp }, ${ previewImgWebp2x }`} />
-          <img src={ previewImg } srcSet={ previewImg2x } width="280" height="240" alt={ name } />
+          <source
+            type="image/webp"
+            srcSet={`${ previewImgWebp }, ${ previewImgWebp2x }`}
+          />
+          <img
+            src={ previewImg }
+            srcSet={ previewImg2x }
+            width="280"
+            height="240"
+            alt={ name }
+          />
         </picture>
       </div>
       <div className="product-card__info">
