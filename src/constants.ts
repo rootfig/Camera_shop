@@ -29,7 +29,11 @@ export const CamerasFilters = {
 };
 
 export enum NameSpace {
-  Cameras = 'Cameras',
-  Camera = 'Camera',
+  Cameras = 'CAMERAS',
+  Camera = 'CAMERA',
 }
 
+export enum TabName {
+  Characteristics = 'CHARACTERISTICS',
+  Description = 'DESCRIPTION'
+}
