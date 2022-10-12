@@ -7,7 +7,7 @@ import ProductScreen from '../../pages/product-screen/product-screen';
 function App(): JSX.Element {
   return (
     <Routes>
-      <Route path={AppRoute.Main} element={<Navigate replace to={AppRoute.Catalog} />} />
+      <Route path={AppRoute.Main} element={<Navigate replace to={`${AppRoute.Catalog}/1`} />} />
       <Route path={`${AppRoute.Catalog}/:id`} element={ <CatalogScreen /> }/>
       <Route path={`${AppRoute.Product}/:id`} element={ <ProductScreen /> }/>
       <Route path="*" element={ <NotFoundScreen /> }/>

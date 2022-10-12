@@ -5,12 +5,10 @@ type PaginationProps = {
   productsPerPage: number;
   totalProducts: number;
   paginate: (pageNumber: number) => void;
-  nextPage: () => void;
-  prevPage: () => void;
   currentPage: number;
 };
 
-function Pagination({ productsPerPage, totalProducts, paginate, nextPage, prevPage, currentPage }: PaginationProps): JSX.Element {
+function Pagination({ productsPerPage, totalProducts, paginate, currentPage }: PaginationProps): JSX.Element {
   const pageNumbers = [];
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 

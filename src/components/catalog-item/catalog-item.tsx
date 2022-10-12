@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants';
 import { Camera } from '../../types/camera';
-import { getProductUrl } from '../../utils/utils';
-
 
 type CatalogItemProps = {
   camera: Camera;
@@ -10,8 +9,6 @@ type CatalogItemProps = {
 function CatalogItem({camera}: CatalogItemProps) {
   const { id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
 
-  // eslint-disable-next-line no-console
-  console.log(camera.previewImg);
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -57,7 +54,7 @@ function CatalogItem({camera}: CatalogItemProps) {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to={ getProductUrl(id) }>Подробнее
+        <Link className="btn btn--transparent" to={ `${AppRoute.Product}/${id}` }>Подробнее
         </Link>
       </div>
     </div>

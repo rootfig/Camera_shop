@@ -20,16 +20,12 @@ function CatalogScreen(): JSX.Element {
 
   const params = useParams();
   const currentNumbPage = Number(params.id) === null || typeof(params.id) === undefined ? startNumbPage : Number(params.id);
-  // eslint-disable-next-line no-console
-  console.log('currentNumbPage', currentNumbPage);
 
-  // const maxImages = 40;
   const cameras = useAppSelector(selectCameras);
   const [products, setProducts] = useState<Camera[]>([]);
   const [currentPage, setCurrentPage] = useState(startNumbPage);
   const [productsPerPage] = useState(maxImgPerPage);
-  // eslint-disable-next-line no-console
-  console.log(currentPage);
+
   useEffect(() => {
     if (cameras) {
       setCurrentPage(currentNumbPage);
@@ -41,8 +37,6 @@ function CatalogScreen(): JSX.Element {
   const currentProducts = cameras.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
-  const prevPage = () => setCurrentPage((prev) => prev - 1);
 
   return(
     <HelmetProvider>
@@ -79,8 +73,6 @@ function CatalogScreen(): JSX.Element {
                       productsPerPage={productsPerPage}
                       totalProducts={products.length}
                       paginate={paginate}
-                      nextPage={nextPage}
-                      prevPage={prevPage}
                       currentPage={currentPage}
                     />
 
