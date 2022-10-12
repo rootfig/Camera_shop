@@ -1,10 +1,12 @@
 export const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 export const REQUEST_TIMEOUT = 5000;
 export const PRODUCTS_COUNT = 9;
+export const FIRST_PAGINATION_PAGE = 1;
 
 export const AppRoute = {
-  Cameras: '/:id',
-  CamerasDetailed: '/cameras/:id',
+  Main: '/',
+  Catalog: '/catalog_',
+  Product: '/product',
 };
 
 export const RouteName = {

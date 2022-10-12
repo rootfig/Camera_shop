@@ -15,8 +15,7 @@ function ProductScreen(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
   const cameraId = params.id;
-  // eslint-disable-next-line no-console
-  console.log(cameraId);
+
   useEffect(() => {
     if (cameraId) {
       dispatch(fetchCameraAction(cameraId));

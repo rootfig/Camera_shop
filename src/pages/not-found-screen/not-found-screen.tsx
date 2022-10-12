@@ -23,7 +23,7 @@ function NotFoundScreen(): JSX.Element {
           <div className="page-content">
 
             <p >404 Страница не найдена</p>
-            <Link style={{fontSize: 40}} to={AppRoute.Cameras}> Вернуться в каталог</Link>
+            <Link style={{fontSize: 40}} to={`${AppRoute.Catalog}/1`}> Вернуться в каталог</Link>
           </div>
         </main>
 

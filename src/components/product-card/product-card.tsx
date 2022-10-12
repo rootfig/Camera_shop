@@ -7,8 +7,7 @@ function ProductCard(): JSX.Element {
 
   const camera = useAppSelector(selectCamera);
   const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
-  // eslint-disable-next-line no-console
-  console.log(camera);
+
   return (
     <div className="page-content__section">
       <section className="product">

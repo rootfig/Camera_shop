@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants';
 
 type PaginationProps = {
   productsPerPage: number;
@@ -16,23 +17,6 @@ function Pagination({ productsPerPage, totalProducts, paginate, nextPage, prevPa
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-  // const handlePaginateClick = ( number: number, e: React.MouseEvent) => {
-
-  //   paginate(number);
-
-  // };
-
-  const handleNextPageClick = ( e: React.MouseEvent) => {
-    e.preventDefault();
-    nextPage();
-
-  };
-
-  const handlePrevPageClick = ( e: React.MouseEvent) => {
-    e.preventDefault();
-    prevPage();
-
-  };
 
   return (
     <div className="pagination">
@@ -40,8 +24,8 @@ function Pagination({ productsPerPage, totalProducts, paginate, nextPage, prevPa
         <li className={currentPage === 1 ? 'pagination__item visually-hidden' : 'pagination__item'}>
           <Link
             className="pagination__link pagination__link--text"
-            to="/#"
-            onClick={handlePrevPageClick}
+            to={`${AppRoute.Catalog}/${ currentPage - 1 }`}
+            onClick={() => paginate(currentPage)}
           >Назад
           </Link>
         </li>
@@ -51,7 +35,7 @@ function Pagination({ productsPerPage, totalProducts, paginate, nextPage, prevPa
           >
             <Link
               className={currentPage === number ? 'pagination__link pagination__link--active' : 'pagination__link'}
-              to={`/${ number }`}
+              to={`${AppRoute.Catalog}/${ number }`}
               onClick={() => paginate(number)}
             >
               {number}
@@ -61,8 +45,8 @@ function Pagination({ productsPerPage, totalProducts, paginate, nextPage, prevPa
         <li className={currentPage === totalPages ? 'pagination__item visually-hidden' : 'pagination__item'}>
           <Link
             className="pagination__link pagination__link--text"
-            to="!#"
-            onClick={handleNextPageClick}
+            to={`${AppRoute.Catalog}/${ currentPage + 1 }`}
+            onClick={() => paginate(currentPage)}
           >Далее
           </Link>
         </li>
