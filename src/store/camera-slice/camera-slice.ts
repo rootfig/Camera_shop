@@ -20,6 +20,7 @@ const initialState: CameraSliceState = {
     previewImgWebp2x: '',
     reviewCount: 0
   },
+  isLoading: false,
   isLoaded: false,
   isLoadError: false,
 };
@@ -31,7 +32,7 @@ export const cameraSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchCameraAction.pending, (state) => {
-        state.isLoaded = true;
+        state.isLoading = true;
         state.isLoadError = false;
       })
       .addCase(fetchCameraAction.fulfilled, (state, action) => {

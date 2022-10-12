@@ -7,7 +7,8 @@ function ProductCard(): JSX.Element {
 
   const camera = useAppSelector(selectCamera);
   const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
-
+  // eslint-disable-next-line no-console
+  console.log(camera);
   return (
     <div className="page-content__section">
       <section className="product">
@@ -16,11 +17,11 @@ function ProductCard(): JSX.Element {
             <picture>
               <source
                 type="image/webp"
-                srcSet={`${ previewImgWebp }, ${ previewImgWebp2x }`}
+                srcSet={`../${ previewImgWebp }, ../${ previewImgWebp2x }`}
               />
               <img
-                src={ previewImg }
-                srcSet={ `..${previewImg2x}` }
+                src={ `../${previewImg}` }
+                srcSet={ `../${previewImg2x}` }
                 width="560"
                 height="480"
                 alt={ name }

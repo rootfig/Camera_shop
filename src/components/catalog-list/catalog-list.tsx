@@ -6,6 +6,7 @@ type CatalogListProps = {
 }
 
 function CatalogList( {cameras}: CatalogListProps ) {
+
   return (
     <div className="cards catalog__cards">
       {cameras.map((camera) =>

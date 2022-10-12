@@ -9,11 +9,40 @@ import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import { selectCameras } from '../../store/cameras-slice/selectorts';
-import { getProductSlice } from '../../utils/utils';
+import { useEffect, useState } from 'react';
+import { Camera } from '../../types/camera';
+import { useParams } from 'react-router-dom';
+
 
 function CatalogScreen(): JSX.Element {
+  const startNumbPage = 1;
+  const maxImgPerPage = 9;
 
+  const params = useParams();
+  const currentNumbPage = Number(params.id) === null || typeof(params.id) === undefined ? startNumbPage : Number(params.id);
+  // eslint-disable-next-line no-console
+  console.log('currentNumbPage', currentNumbPage);
+
+  // const maxImages = 40;
   const cameras = useAppSelector(selectCameras);
+  const [products, setProducts] = useState<Camera[]>([]);
+  const [currentPage, setCurrentPage] = useState(startNumbPage);
+  const [productsPerPage] = useState(maxImgPerPage);
+  // eslint-disable-next-line no-console
+  console.log(currentPage);
+  useEffect(() => {
+    if (cameras) {
+      setCurrentPage(currentNumbPage);
+      setProducts(cameras);
+    }
+  },[cameras, currentNumbPage]);
+  const indexOfLastPost = currentPage * productsPerPage;
+  const indexOfFirstPost = indexOfLastPost - productsPerPage;
+  const currentProducts = cameras.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage((prev) => prev + 1);
+  const prevPage = () => setCurrentPage((prev) => prev - 1);
 
   return(
     <HelmetProvider>
@@ -44,9 +73,16 @@ function CatalogScreen(): JSX.Element {
 
                     <CatalogSort />
 
-                    <CatalogList cameras={getProductSlice(cameras)} />
+                    <CatalogList cameras={currentProducts} />
 
-                    <Pagination />
+                    <Pagination
+                      productsPerPage={productsPerPage}
+                      totalProducts={products.length}
+                      paginate={paginate}
+                      nextPage={nextPage}
+                      prevPage={prevPage}
+                      currentPage={currentPage}
+                    />
 
                   </div>
                 </div>
