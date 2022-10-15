@@ -4,17 +4,19 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ProductCard from '../../components/product-card/product-card';
-import SimilarCameras from '../../components/similar/similar-cameras';
+import SimilarCameras from '../../components/similars-list/similars-list';
 import Review from '../../components/review/review';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { fetchCameraAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { selectCamera } from '../../store/camera-slice/selectors';
 
 function ProductScreen(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
   const cameraId = params.id;
+  const camera = useAppSelector(selectCamera);
 
   useEffect(() => {
     if (cameraId) {
@@ -22,11 +24,14 @@ function ProductScreen(): JSX.Element {
     }
   }, [cameraId, dispatch]);
 
+  // eslint-disable-next-line no-console
+  console.log(camera);
+
   return(
     <HelmetProvider>
       <div className="wrapper">
         <Helmet>
-          <title>Продукт - Фотошоп</title>
+          <title>{ camera.name } - Фотошоп</title>
           <meta name="description" content="Фотошоп — Интернет-магазин фото- и видеотехники" />
         </Helmet>
 
@@ -36,9 +41,9 @@ function ProductScreen(): JSX.Element {
 
           <div className="page-content">
 
-            <Breadcrumbs />
+            <Breadcrumbs camera={camera} />
 
-            <ProductCard />
+            <ProductCard camera={camera}/>
 
             <SimilarCameras />
 

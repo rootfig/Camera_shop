@@ -10,6 +10,14 @@ export type CamerasSliceState = {
   cameras: Camera[];
   isLoaded: boolean;
   isLoadError: boolean;
+  isLoading: boolean;
+}
+
+export type SimilarSliceState = {
+  similars: Camera[];
+  isLoaded: boolean;
+  isLoadError: boolean;
+  isLoading: boolean;
 }
 
 export type CameraSliceState = {

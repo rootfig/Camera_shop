@@ -9,7 +9,8 @@ const ApiAction = {
   FetchCameras: 'data/fetchCameras',
   FetchCamera: 'data/fetchCamera',
   FetchPromo:'data/fetchPromo',
-  FetchPaginateCameras:'data/fetchPaginateCamera'
+  FetchPaginateCameras:'data/fetchPaginateCamera',
+  FetchSimilar: 'data/fetchSimilar',
 };
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
@@ -53,6 +54,18 @@ export const fetchPromoAction = createAsyncThunk<Promo, undefined, {
   ApiAction.FetchPromo,
   async (_arg, { extra: api}) => {
     const { data } = await api.get<Promo>(APIRoute.Promo);
+    return data;
+  }
+);
+
+export const fetchSimilarAction = createAsyncThunk<Camera[], undefined,{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  ApiAction.FetchSimilar,
+  async (_arg, { extra: api}) => {
+    const { data } = await api.get<Camera[]>(`${APIRoute.Cameras}?name_like=Shot`);
     return data;
   }
 );

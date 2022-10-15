@@ -45,6 +45,7 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Camera = 'CAMERA',
   Promo = 'PROMO',
+  Similar = 'SIMILAR',
 }
 
 export enum TabName {

@@ -1,11 +1,12 @@
-
-import { useAppSelector } from '../../hooks';
-import { selectCamera } from '../../store/camera-slice/selectors';
+import { Camera } from '../../types/camera';
 import TabMenu from '../tab-menu/tab-menu';
 
-function ProductCard(): JSX.Element {
+type ProductCardProps = {
+  camera: Camera;
+}
 
-  const camera = useAppSelector(selectCamera);
+function ProductCard({camera}: ProductCardProps): JSX.Element {
+
   const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
 
   return (
