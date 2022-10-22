@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { selectSimilar } from '../../store/similar-slice/selectors';
 import SimilarItem from '../similar-item/similar-item';
 
-function SimilarList() {
+function SimilarList(): JSX.Element {
   const [indexOfFirstProduct, setIndexOfFirstProduct] = useState(0) ;
   const indexOfLastProduct = indexOfFirstProduct + 3;
   const similars = useAppSelector(selectSimilar);

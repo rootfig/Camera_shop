@@ -2,7 +2,7 @@ import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import { selectPromo } from '../../store/promo-slice/selectors';
 
-function Banner() {
+function Banner(): JSX.Element {
   const promo = useAppSelector(selectPromo);
 
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = promo;

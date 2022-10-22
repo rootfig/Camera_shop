@@ -1,4 +1,4 @@
-function CatalogSort() {
+function CatalogSort(): JSX.Element {
   return (
     <div className="catalog-sort">
       <form action="#">

@@ -1,4 +1,4 @@
-function CatalogFilter() {
+function CatalogFilter(): JSX.Element {
   return (
     <div className="catalog__aside">
       <div className="catalog-filter">
