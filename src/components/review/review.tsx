@@ -1,15 +1,14 @@
-import { useState } from 'react';
-import ReviewForm from './review-form/review-form';
-// import AddReviewButton from './add-review-button/add-review-button';
+import { Review } from '../../types/review';
 import MoreReviewButton from './more-review-button/more-review-button';
-import ReviewList from './review-list/review-list';
+import ReviewItem from './review-item/review-item';
 
-function Review(): JSX.Element {
-  const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
-
-  const handleAddReviewButtonClick = () => {
-    setIsAddReviewModalOpen(true);
-  };
+type ReviewProps = {
+  handleAddReviewButtonClick: () => void;
+  reviews: Review[];
+  onChangeShowCount: (count: number) => void;
+  showCount: number;
+}
+function Reviews({reviews, showCount, handleAddReviewButtonClick, onChangeShowCount}: ReviewProps): JSX.Element {
 
   return (
     <div className="page-content__section">
@@ -24,16 +23,23 @@ function Review(): JSX.Element {
             >Оставить свой отзыв
             </button>
           </div>
-          <ReviewList />
-          <MoreReviewButton />
+          <ul className="review-block__list">
+            {reviews.map((review) =>
+              (
+                <ReviewItem key={ review.id } item={ review } />
+              ))}
+          </ul>
+          {
+            reviews.length >= showCount &&
+             <MoreReviewButton
+               onChangeShowCount={onChangeShowCount}
+               showCount={showCount}
+             />
+          }
         </div>
       </section>
-      { isAddReviewModalOpen &&
-        <ReviewForm
-          setActive={ setIsAddReviewModalOpen }
-        />}
     </div>
   );
 }
 
-export default Review;
+export default Reviews;

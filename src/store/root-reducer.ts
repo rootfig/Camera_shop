@@ -3,6 +3,7 @@ import { NameSpace } from '../constants';
 import { cameraSlice } from './camera-slice/camera-slice';
 import { camerasSlice } from './cameras-slice/cameras-slice';
 import { promoSlice } from './promo-slice/promo-slice';
+import { reviewsSlice } from './reviews-slice/reviews-slice';
 import { similarSlice } from './similar-slice/similar-slice';
 
 export const rootReducer = combineReducers({
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Camera]: cameraSlice.reducer,
   [NameSpace.Promo]: promoSlice.reducer,
   [NameSpace.Similar]: similarSlice.reducer,
+  [NameSpace.Reviews]: reviewsSlice.reducer,
 });

@@ -9,6 +9,17 @@ function SimilarList(): JSX.Element {
   const similars = useAppSelector(selectSimilar);
   const currentList = similars.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  const handlePrevButtonClick = () => {
+    setIndexOfFirstProduct(indexOfFirstProduct - 1);
+    // eslint-disable-next-line no-console
+    console.log('hi');
+  };
+
+  const handleNextButtonClick = () => {
+    setIndexOfFirstProduct(indexOfFirstProduct + 1);
+    // eslint-disable-next-line no-console
+    console.log('hi');
+  };
   return (
     <div className="page-content__section">
       <section className="product-similar">
@@ -29,7 +40,7 @@ function SimilarList(): JSX.Element {
               className="slider-controls slider-controls--prev"
               type="button"
               aria-label="Предыдущий слайд"
-              onClick={() => setIndexOfFirstProduct(indexOfFirstProduct - 1)}
+              onClick={ handlePrevButtonClick }
               disabled={indexOfFirstProduct === 0}
             >
               <svg width="7" height="12" aria-hidden="true">
@@ -40,7 +51,7 @@ function SimilarList(): JSX.Element {
               className="slider-controls slider-controls--next"
               type="button"
               aria-label="Следующий слайд"
-              onClick={() => setIndexOfFirstProduct(indexOfFirstProduct + 1)}
+              onClick={ handleNextButtonClick }
               disabled={indexOfFirstProduct === similars.length - 3}
             >
               <svg width="7" height="12" aria-hidden="true">

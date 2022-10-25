@@ -2,6 +2,7 @@ export const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 export const REQUEST_TIMEOUT = 5000;
 export const PRODUCTS_COUNT = 9;
 export const FIRST_PAGINATION_PAGE = 1;
+export const REVIEWS_COUNT = 3;
 
 export const AppRoute = {
   Main: '/',
@@ -46,6 +47,7 @@ export enum NameSpace {
   Camera = 'CAMERA',
   Promo = 'PROMO',
   Similar = 'SIMILAR',
+  Reviews = 'REVIEWS',
 }
 
 export enum TabName {
