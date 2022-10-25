@@ -1,7 +1,6 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ProductCard from '../../components/product-card/product-card';
 import SimilarList from '../../components/similars-list/similars-list';
@@ -15,6 +14,7 @@ import ReviewForm from '../../components/review/review-form/review-form';
 import { selectReviews } from '../../store/reviews-slice/selectors';
 import { REVIEWS_COUNT } from '../../constants';
 import { Review } from '../../types/review';
+import UpButton from '../../components/up-button/up-button';
 
 function ProductScreen(): JSX.Element {
   const params = useParams();
@@ -62,6 +62,7 @@ function ProductScreen(): JSX.Element {
           </div>
           { isAddReviewModalOpen && <ReviewForm setActive={ setIsAddReviewModalOpen } />}
         </main>
+        <UpButton />
         <Footer />
       </div>
     </HelmetProvider>
