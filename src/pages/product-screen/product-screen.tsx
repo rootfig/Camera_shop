@@ -4,10 +4,10 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ProductCard from '../../components/product-card/product-card';
 import SimilarList from '../../components/similars-list/similars-list';
-import Reviews from '../../components/review/review';
+import Reviews from '../../components/review/reviews';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { fetchCameraAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchCameraAction, fetchReviewsAction, fetchSimilarAction } from '../../store/api-actions';
 import { useEffect, useState } from 'react';
 import { selectCamera } from '../../store/camera-slice/selectors';
 import ReviewForm from '../../components/review/review-form/review-form';
@@ -19,18 +19,20 @@ import UpButton from '../../components/up-button/up-button';
 function ProductScreen(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const cameraId = params.id;
+  const cameraId = Number(params.id);
   const camera = useAppSelector(selectCamera);
-  const reviews = useAppSelector(selectReviews);
+  const reviewsData = useAppSelector(selectReviews);
+  const reviews = [...reviewsData].sort((a, b) => (a.createAt > b.createAt ? -1 : 1));
+
+  const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
 
   useEffect(() => {
     if (cameraId) {
       dispatch(fetchCameraAction(cameraId));
       dispatch(fetchReviewsAction(cameraId));
+      dispatch(fetchSimilarAction(cameraId));
     }
-  }, [cameraId, dispatch]);
-
-  const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
+  }, [isAddReviewModalOpen, cameraId, dispatch]);
 
   const handleAddReviewButtonClick = () => {
     setIsAddReviewModalOpen(true);
@@ -38,7 +40,7 @@ function ProductScreen(): JSX.Element {
 
   const [showCount, setShowCount] = useState<number>(REVIEWS_COUNT);
 
-  const getReviewsList = (review: Review[]) => reviews.slice(0, showCount);
+  const getReviewsList = (items: Review[]) => items.slice(0, showCount);
 
   return(
     <HelmetProvider>
@@ -60,7 +62,7 @@ function ProductScreen(): JSX.Element {
               showCount={showCount}
             />
           </div>
-          { isAddReviewModalOpen && <ReviewForm setActive={ setIsAddReviewModalOpen } />}
+          { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
         </main>
         <UpButton />
         <Footer />

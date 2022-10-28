@@ -1,4 +1,4 @@
-export type reviewPost = {
+export type ReviewPost = {
   cameraId: number;
   userName: string;
   advantage: string;

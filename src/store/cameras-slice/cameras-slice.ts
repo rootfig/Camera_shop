@@ -5,7 +5,6 @@ import { fetchCamerasAction } from '../api-actions';
 
 const initialState: CamerasSliceState = {
   cameras: [],
-  isLoading: true,
   isLoaded: false,
   isLoadError: false,
 };
@@ -17,7 +16,6 @@ export const camerasSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
-        state.isLoading = true;
         state.isLoaded = true;
         state.isLoadError = false;
       })

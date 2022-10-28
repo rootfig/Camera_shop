@@ -1,20 +1,47 @@
+import { FormEvent, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { MIN_REVIEW_LENGTH, RatingTitle, RATING_VALUES } from '../../../constants';
+import { useAppDispatch } from '../../../hooks';
+import useKeydown from '../../../hooks/use-keydown';
+import { postReviewAction } from '../../../store/api-actions';
+import { ReviewPost } from '../../../types/review-post';
 
 type ReviewFormProps = {
   setActive: (arg0:boolean) => void;
+  cameraId: number;
 }
 
-type TFotmInput = {
-  text: string;
-  required: boolean;
-  minLength: number;
-}
+function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
+  useKeydown('Escape', () => setActive(false));
+  const dispatch = useAppDispatch();
 
-function ReviewForm({ setActive }: ReviewFormProps): JSX.Element {
+  const [rating, setRating] = useState(0);
+
   const {
     register,
-    formState: { errors },
-  } = useForm<TFotmInput>();
+    formState: {
+      errors,
+    },
+    handleSubmit,
+  } = useForm<ReviewPost>({
+    mode: 'onChange'
+  });
+
+  const handleSubmitForm = handleSubmit((review) => {
+    const reviewData = {
+      ...review,
+      cameraId,
+      rating: Number(review.rating),
+
+    };
+    dispatch(postReviewAction(reviewData));
+  });
+
+  const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    handleSubmitForm(evt);
+  };
+
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
@@ -22,9 +49,9 @@ function ReviewForm({ setActive }: ReviewFormProps): JSX.Element {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+            <form method="post" onSubmit={onSubmit}>
               <div className="form-review__rate">
-                <fieldset className="rate form-review__item">
+                <fieldset className={errors.rating ? 'rate form-review__item is-invalid' : 'rate form-review__item'}>
                   <legend className="rate__caption">Рейтинг
                     <svg width="9" height="9" aria-hidden="true">
                       <use xlinkHref="#icon-snowflake"></use>
@@ -32,23 +59,26 @@ function ReviewForm({ setActive }: ReviewFormProps): JSX.Element {
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5" />
-                      <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
-                      <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4" />
-                      <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
-                      <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3" />
-                      <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
-                      <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2" />
-                      <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
-                      <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1" />
-                      <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
+                      {RATING_VALUES.map((index) => (
+                        <Fragment key={`star-${index}`}>
+                          <input
+                            className="visually-hidden"
+                            id={`star-${index}`}
+                            type="radio"
+                            {...register('rating', {required: true})}
+                            value={index}
+                            onChange={() => setRating(rating)}
+                          />
+                          <label className="rate__label" htmlFor={`star-${index}`} title={RatingTitle[index]}></label>
+                        </Fragment>
+                      ))}
                     </div>
                     <div className="rate__progress"><span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
-                <div className="custom-input form-review__item">
+                <div className={errors.userName ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
                   <label>
                     <span className="custom-input__label">Ваше имя
                       <svg width="9" height="9" aria-hidden="true">
@@ -57,55 +87,74 @@ function ReviewForm({ setActive }: ReviewFormProps): JSX.Element {
                     </span>
                     <input
                       type="text"
-                      // name="user-name"
                       placeholder="Введите ваше имя"
-                      required
-                      {...register('text',{
-                        required: true,
-                        minLength: 10,
+                      {...register('userName', {
+                        required: true
                       })}
                     />
-                    {errors?.minLength && <p>password required</p>}
-                    {/* {errors?.password?.types?.minLength && <p>password minLength 10</p>}
-                    {errors?.password?.types?.pattern && <p>password number only</p>} */}
                   </label>
                   <p className="custom-input__error">Нужно указать имя</p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div className={errors.advantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
                   <label>
                     <span className="custom-input__label">Достоинства
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
+                    <input
+                      type="text"
+                      placeholder="Основные преимущества товара"
+                      {...register('advantage', {
+                        required: true
+                      })}
+                    />
                   </label>
                   <p className="custom-input__error">Нужно указать достоинства</p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div className={errors.disadvantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
                   <label>
                     <span className="custom-input__label">Недостатки
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
+                    <input
+                      type="text"
+                      placeholder="Главные недостатки товара"
+                      {...register('disadvantage', {
+                        required: true
+                      })}
+                    />
                   </label>
                   <p className="custom-input__error">Нужно указать недостатки</p>
                 </div>
-                <div className="custom-textarea form-review__item">
+                <div className={errors.review ? 'custom-textarea form-review__item is-invalid' : 'custom-input form-review__item'}>
                   <label>
                     <span className="custom-textarea__label">Комментарий
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"></textarea>
+                    <textarea
+                      placeholder="Поделитесь своим опытом покупки"
+                      {...register('review', {
+                        required: true,
+                        minLength: {
+                          value: MIN_REVIEW_LENGTH,
+                          message: `Нужно не менее ${MIN_REVIEW_LENGTH} символов`
+                        },
+                      })}
+                    >
+                    </textarea>
                   </label>
-                  <div className="custom-textarea__error">Нужно добавить комментарий</div>
+                  {errors.review &&
+                    <div className="custom-textarea__error">
+                      {errors.review.message ? errors.review.message : 'Нужно добавить комментарий'}
+                    </div>}
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+              <button className="btn btn--purple form-review__btn" type="submit" >Отправить отзыв</button>
             </form>
           </div>
           <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => setActive(false)}>

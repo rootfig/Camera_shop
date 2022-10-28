@@ -1,15 +1,16 @@
 import { Review } from '../../../types/review';
+import { humanizeCommentDate } from '../../../utils/utils';
 
 type ReviewItemProps = {
   item: Review;
 }
 function ReviewItem({ item }: ReviewItemProps): JSX.Element {
-  const {id, userName, rating, advantage, disadvantage, review} = item;
+  const {id, userName, rating, advantage, disadvantage, review, createAt} = item;
   return (
     <li className="review-card" key={id}>
       <div className="review-card__head">
         <p className="title title--h4">{ userName }</p>
-        <time className="review-card__data" dateTime="2022-04-13">13 апреля</time>
+        <time className="review-card__data" dateTime="2022-04-13">{humanizeCommentDate(createAt)}</time>
       </div>
       <div className="rate review-card__rate">
         <svg width="17" height="16" aria-hidden="true">

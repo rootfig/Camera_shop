@@ -5,6 +5,7 @@ import { AppDispatch, State } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Promo } from '../types/promo';
 import { Review } from '../types/review';
+import { ReviewPost } from '../types/review-post';
 
 const ApiAction = {
   FetchCameras: 'data/fetchCameras',
@@ -13,6 +14,7 @@ const ApiAction = {
   FetchPaginateCameras:'data/fetchPaginateCamera',
   FetchSimilar: 'data/fetchSimilar',
   FetchReviews: 'data/fetchReviews',
+  PostReviews: 'user/postReviews'
 };
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
@@ -27,22 +29,11 @@ export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   }
 );
 
-// export const fetchPaginateCamerasAction = createAsyncThunk<Camera[], string[], {
-
-//   extra: AxiosInstance;
-// }>(
-//   ApiAction.FetchPaginateCameras,
-//   async ([start, end], { extra: api}) => {
-//     const { data } = await api.get<Camera[]>(`${RouteName.Cameras}?_start=${ start }&_limit=${ end }`);
-//     return data;
-//   }
-// );
-
-export const fetchCameraAction = createAsyncThunk<Camera, string, {
+export const fetchCameraAction = createAsyncThunk<Camera, number, {
   extra: AxiosInstance;
 }>(
   ApiAction.FetchCamera,
-  async (id: string, {extra: api}) => {
+  async (id: number, {extra: api}) => {
     const {data} = await api.get<Camera>(`${ APIRoute.Cameras }/${ id }`);
     return data;
   }
@@ -60,19 +51,19 @@ export const fetchPromoAction = createAsyncThunk<Promo, undefined, {
   }
 );
 
-export const fetchSimilarAction = createAsyncThunk<Camera[], undefined,{
+export const fetchSimilarAction = createAsyncThunk<Camera[], number,{
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   ApiAction.FetchSimilar,
-  async (_arg, { extra: api}) => {
-    const { data } = await api.get<Camera[]>(`${APIRoute.Cameras}?name_like=Shot`);
+  async (id, { extra: api}) => {
+    const { data } = await api.get<Camera[]>(`${APIRoute.Cameras}/${id}/similar`);
     return data;
   }
 );
 
-export const fetchReviewsAction = createAsyncThunk<Review[], string, {
+export const fetchReviewsAction = createAsyncThunk<Review[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -82,4 +73,20 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
     const {data} = await api.get<Review[]>(`${APIRoute.Cameras}/${id}/reviews`);
     return data;
   },
+);
+
+export const postReviewAction = createAsyncThunk<void, ReviewPost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/send-review',
+  async (reviewPost: ReviewPost, { extra: api}) => {
+    try {
+      await api.post<ReviewPost>(APIRoute.Reviews, reviewPost);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  }
 );
