@@ -11,10 +11,12 @@ import { fetchCameraAction, fetchReviewsAction, fetchSimilarAction } from '../..
 import { useEffect, useState } from 'react';
 import { selectCamera } from '../../store/camera-slice/selectors';
 import ReviewForm from '../../components/review/review-form/review-form';
-import { selectReviews } from '../../store/reviews-slice/selectors';
+import { selectIsReviewSuccessOpen, selectReviews } from '../../store/reviews-slice/selectors';
 import { REVIEWS_COUNT } from '../../constants';
 import { Review } from '../../types/review';
 import UpButton from '../../components/up-button/up-button';
+import ReviewSuccess from '../../components/review/review-success/review-success';
+import { fetchSuccessModalAction } from '../../store/reviews-slice/reviews-slice';
 
 function ProductScreen(): JSX.Element {
   const params = useParams();
@@ -23,14 +25,20 @@ function ProductScreen(): JSX.Element {
   const camera = useAppSelector(selectCamera);
   const reviewsData = useAppSelector(selectReviews);
   const reviews = [...reviewsData].sort((a, b) => (a.createAt > b.createAt ? -1 : 1));
+  const isReviewSuccessOpen = useAppSelector(selectIsReviewSuccessOpen);
 
+  // eslint-disable-next-line no-console
+  console.log(reviews);
+  // eslint-disable-next-line no-console
+  console.log(isReviewSuccessOpen);
   const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
+
 
   useEffect(() => {
     if (cameraId) {
       dispatch(fetchCameraAction(cameraId));
-      dispatch(fetchReviewsAction(cameraId));
       dispatch(fetchSimilarAction(cameraId));
+      dispatch(fetchReviewsAction(cameraId));
     }
   }, [isAddReviewModalOpen, cameraId, dispatch]);
 
@@ -38,9 +46,14 @@ function ProductScreen(): JSX.Element {
     setIsAddReviewModalOpen(true);
   };
 
-  const [showCount, setShowCount] = useState<number>(REVIEWS_COUNT);
+  const handleReviewSuccessButtonClick = () => {
 
-  const getReviewsList = (items: Review[]) => items.slice(0, showCount);
+    dispatch(fetchSuccessModalAction());
+  };
+
+  const [reviewsListCount, setReviewsListCount] = useState<number>(REVIEWS_COUNT);
+
+  const getReviewsList = (items: Review[]) => items.slice(0, reviewsListCount);
 
   return(
     <HelmetProvider>
@@ -58,11 +71,12 @@ function ProductScreen(): JSX.Element {
             <Reviews
               reviews={getReviewsList(reviews)}
               handleAddReviewButtonClick={handleAddReviewButtonClick}
-              onChangeShowCount={setShowCount}
-              showCount={showCount}
+              onChangeReviewsListCount={setReviewsListCount}
+              reviewsListCount={reviewsListCount}
             />
           </div>
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
+          { isReviewSuccessOpen && <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} /> }
         </main>
         <UpButton />
         <Footer />

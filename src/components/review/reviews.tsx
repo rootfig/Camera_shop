@@ -5,10 +5,10 @@ import ReviewItem from './review-item/review-item';
 type ReviewProps = {
   handleAddReviewButtonClick: () => void;
   reviews: Review[];
-  onChangeShowCount: (count: number) => void;
-  showCount: number;
+  onChangeReviewsListCount: (count: number) => void;
+  reviewsListCount: number;
 }
-function Reviews({reviews, showCount, handleAddReviewButtonClick, onChangeShowCount}: ReviewProps): JSX.Element {
+function Reviews({reviews, reviewsListCount, handleAddReviewButtonClick, onChangeReviewsListCount}: ReviewProps): JSX.Element {
 
   return (
     <div className="page-content__section">
@@ -30,10 +30,10 @@ function Reviews({reviews, showCount, handleAddReviewButtonClick, onChangeShowCo
               ))}
           </ul>
           {
-            reviews.length >= showCount &&
+            reviews.length >= reviewsListCount &&
              <MoreReviewButton
-               onChangeShowCount={onChangeShowCount}
-               showCount={showCount}
+               onChangeReviewsListCount={onChangeReviewsListCount}
+               reviewsListCount={reviewsListCount}
              />
           }
         </div>

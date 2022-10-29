@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { MIN_REVIEW_LENGTH, RatingTitle, RATING_VALUES } from '../../../constants';
 import { useAppDispatch } from '../../../hooks';
 import useKeydown from '../../../hooks/use-keydown';
-import { postReviewAction } from '../../../store/api-actions';
+import { fetchReviewsAction, postReviewAction } from '../../../store/api-actions';
 import { ReviewPost } from '../../../types/review-post';
 
 type ReviewFormProps = {
-  setActive: (arg0:boolean) => void;
+  setActive: (value: boolean) => void;
   cameraId: number;
 }
 
@@ -35,17 +35,19 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
 
     };
     dispatch(postReviewAction(reviewData));
+    setActive(false);
   });
 
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(fetchReviewsAction(cameraId));
     handleSubmitForm(evt);
   };
 
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" onClick={() => setActive(false)}></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -154,7 +156,7 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
                     </div>}
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit" >Отправить отзыв</button>
+              <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
             </form>
           </div>
           <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => setActive(false)}>

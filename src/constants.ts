@@ -9,7 +9,7 @@ export const MIN_REVIEW_LENGTH = 5;
 
 export const AppRoute = {
   Main: '/',
-  Catalog: '/catalog_',
+  Catalog: '/catalog',
   Product: '/product',
 };
 
