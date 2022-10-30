@@ -1,8 +1,11 @@
 import {render, screen} from '@testing-library/react';
-import App from './app';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 
-test('Renders app-component', () => {
-  render(<App />);
-  const textElement = screen.getByText(/Hello, world!/i);
-  expect(textElement).toBeInTheDocument();
+
+describe('Application Routing', () => {
+  it('Catalog list renders', () => {
+    render(<ErrorScreen/>);
+
+    expect(screen.getByText('Sorry!')).toBeInTheDocument();
+  });
 });

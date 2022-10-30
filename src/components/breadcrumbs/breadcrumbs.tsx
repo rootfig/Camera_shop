@@ -22,7 +22,7 @@ function Breadcrumbs({ camera }: BreadcrumbsProps): JSX.Element {
           { camera?.name ? (
             <>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={AppRoute.Main}>Каталог
+                <Link className="breadcrumbs__link" to={`${AppRoute.Catalog}/1`}>Каталог
                   <svg width="5" height="8" aria-hidden="true">
                     <use xlinkHref="#icon-arrow-mini"></use>
                   </svg>
