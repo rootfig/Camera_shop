@@ -2,12 +2,13 @@ import useKeydown from '../../../hooks/use-keydown';
 
 type ReviewSuccessProps = {
   handleReviewSuccessButtonClick: () => void;
+  isReviewSuccessOpen: boolean;
 }
-function ReviewSuccess({handleReviewSuccessButtonClick}: ReviewSuccessProps): JSX.Element {
+function ReviewSuccess({handleReviewSuccessButtonClick, isReviewSuccessOpen}: ReviewSuccessProps): JSX.Element {
   useKeydown('Escape', () => handleReviewSuccessButtonClick);
 
   return (
-    <div className="modal is-active modal--narrow">
+    <div className={isReviewSuccessOpen ? 'modal is-active modal--narrow' : 'modal modal--narrow'}>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleReviewSuccessButtonClick}></div>
         <div className="modal__content">

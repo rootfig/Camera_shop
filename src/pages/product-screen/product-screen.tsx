@@ -76,7 +76,7 @@ function ProductScreen(): JSX.Element {
             />
           </div>
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
-          { isReviewSuccessOpen && <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} /> }
+          <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} isReviewSuccessOpen={isReviewSuccessOpen} />
         </main>
         <UpButton />
         <Footer />
