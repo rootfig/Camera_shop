@@ -20,7 +20,7 @@ function ReviewSuccess({handleReviewSuccessButtonClick, isReviewSuccessOpen}: Re
             <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button"onClick={handleReviewSuccessButtonClick}>Вернуться к покупкам
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => handleReviewSuccessButtonClick}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={handleReviewSuccessButtonClick}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
