@@ -11,7 +11,7 @@ function ProductCard({camera}: ProductCardProps): JSX.Element {
 
   return (
     <div className="page-content__section">
-      <section className="product">
+      <section className="product" data-testid='product'>
         <div className="container">
           <div className="product__img">
             <picture>

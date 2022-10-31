@@ -27,12 +27,7 @@ function ProductScreen(): JSX.Element {
   const reviews = [...reviewsData].sort((a, b) => (a.createAt > b.createAt ? -1 : 1));
   const isReviewSuccessOpen = useAppSelector(selectIsReviewSuccessOpen);
 
-  // eslint-disable-next-line no-console
-  console.log(reviews);
-  // eslint-disable-next-line no-console
-  console.log(isReviewSuccessOpen);
   const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
-
 
   useEffect(() => {
     if (cameraId) {

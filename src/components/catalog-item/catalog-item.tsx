@@ -10,7 +10,7 @@ function CatalogItem({camera}: CatalogItemProps): JSX.Element {
   const { id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
 
   return (
-    <div className="product-card">
+    <div className="product-card" data-testid='product-card'>
       <div className="product-card__img">
         <picture>
           <source

@@ -7,7 +7,7 @@ function Banner(): JSX.Element {
 
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = promo;
   return (
-    <div className="banner">
+    <div className="banner" data-testid='banner'>
       <picture>
         <source type="image/webp" srcSet={ `../${ previewImgWebp }, ../${ previewImgWebp2x }`} />
         <img
