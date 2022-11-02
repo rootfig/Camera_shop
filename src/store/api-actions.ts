@@ -82,11 +82,6 @@ export const postReviewAction = createAsyncThunk<void, ReviewPost, {
 }>(
   'films/send-review',
   async (reviewPost: ReviewPost, { extra: api}) => {
-    try {
-      await api.post<ReviewPost>(APIRoute.Reviews, reviewPost);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
+    await api.post<ReviewPost>(APIRoute.Reviews, reviewPost);
   }
 );

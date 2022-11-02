@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { store } from '../../mocks/mock-store';
 import { makeFakeCameras } from '../../mocks/moks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import CatalogList from './catalog-list';
 
 describe('Component: CatalogList', () => {

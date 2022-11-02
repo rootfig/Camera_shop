@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { store } from '../../mocks/mock-store';
 import ErrorScreen from '../../pages/error-screen/error-screen';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import App from './app';
 
 const history = createMemoryHistory();
