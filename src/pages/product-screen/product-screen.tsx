@@ -59,7 +59,7 @@ function ProductScreen(): JSX.Element {
         </Helmet>
         <Header />
         <main>
-          <div className="page-content">
+          <div className="page-content" data-testid='product-screen'>
             <Breadcrumbs camera={camera} />
             <ProductCard camera={camera}/>
             <SimilarList />

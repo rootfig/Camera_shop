@@ -3,7 +3,7 @@ import { NameSpace } from '../../constants';
 import { CameraSliceState } from '../../types/state';
 import { fetchCameraAction } from '../api-actions';
 
-const initialState: CameraSliceState = {
+export const initialState: CameraSliceState = {
   camera: {
     id: 0,
     name: '',
@@ -20,7 +20,6 @@ const initialState: CameraSliceState = {
     previewImgWebp2x: '',
     reviewCount: 0
   },
-  isLoading: false,
   isLoaded: false,
   isLoadError: false,
 };
@@ -32,7 +31,7 @@ export const cameraSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchCameraAction.pending, (state) => {
-        state.isLoading = true;
+        state.isLoaded = true;
         state.isLoadError = false;
       })
       .addCase(fetchCameraAction.fulfilled, (state, action) => {

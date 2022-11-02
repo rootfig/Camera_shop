@@ -7,7 +7,7 @@ type MoreReviewButtonProps = {
 
 function MoreReviewButton({ onChangeReviewsListCount, reviewsListCount }: MoreReviewButtonProps): JSX.Element {
   return (
-    <div className="review-block__buttons">
+    <div className="review-block__buttons" data-testid='more-review-button'>
       <button
         className="btn btn--purple"
         type="button"

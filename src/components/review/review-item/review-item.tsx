@@ -7,7 +7,7 @@ type ReviewItemProps = {
 function ReviewItem({ item }: ReviewItemProps): JSX.Element {
   const {id, userName, rating, advantage, disadvantage, review, createAt} = item;
   return (
-    <li className="review-card" key={id}>
+    <li className="review-card" key={id} data-testid='review-item'>
       <div className="review-card__head">
         <p className="title title--h4">{ userName }</p>
         <time className="review-card__data" dateTime="2022-04-13">{humanizeCommentDate(createAt)}</time>

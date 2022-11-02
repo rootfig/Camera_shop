@@ -1,27 +1,25 @@
 import { useState } from 'react';
+import { SLIDER_STEP_COUNT } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import { selectSimilar } from '../../store/similar-slice/selectors';
 import SimilarItem from '../similar-item/similar-item';
 
 function SimilarList(): JSX.Element {
   const [indexOfFirstProduct, setIndexOfFirstProduct] = useState(0) ;
-  const indexOfLastProduct = indexOfFirstProduct + 3;
+  const indexOfLastProduct = indexOfFirstProduct + SLIDER_STEP_COUNT;
   const similars = useAppSelector(selectSimilar);
   const currentList = similars.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handlePrevButtonClick = () => {
     setIndexOfFirstProduct(indexOfFirstProduct - 1);
-    // eslint-disable-next-line no-console
-    console.log('hi');
   };
 
   const handleNextButtonClick = () => {
     setIndexOfFirstProduct(indexOfFirstProduct + 1);
-    // eslint-disable-next-line no-console
-    console.log('hi');
+
   };
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid='similar-list'>
       <section className="product-similar">
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>
@@ -52,7 +50,7 @@ function SimilarList(): JSX.Element {
               type="button"
               aria-label="Следующий слайд"
               onClick={ handleNextButtonClick }
-              disabled={indexOfFirstProduct === similars.length - 3}
+              disabled={indexOfFirstProduct === similars.length - SLIDER_STEP_COUNT}
             >
               <svg width="7" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-arrow"></use>

@@ -45,7 +45,7 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
   };
 
   return (
-    <div className="modal is-active">
+    <div className="modal is-active" data-testid='review-form'>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={() => setActive(false)}></div>
         <div className="modal__content">

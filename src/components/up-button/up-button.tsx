@@ -8,7 +8,7 @@ function UpButton() {
   };
 
   return (
-    <button
+    <button data-testid='up-button'
       className="up-btn"
       onClick={scrollToTop}
     >

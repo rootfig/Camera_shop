@@ -11,7 +11,7 @@ type ReviewProps = {
 function Reviews({reviews, reviewsListCount, handleAddReviewButtonClick, onChangeReviewsListCount}: ReviewProps): JSX.Element {
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid='review'>
       <section className="review-block">
         <div className="container">
           <div className="page-content__headed">

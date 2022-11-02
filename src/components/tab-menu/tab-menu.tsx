@@ -16,7 +16,7 @@ function TabMenu({camera}: TabMenuProps): JSX.Element {
     setCurrentTab(index);
   };
   return (
-    <div className="tabs product__tabs">
+    <div className="tabs product__tabs" data-testid='tab-menu'>
       <div className="tabs__controls product__tabs-controls">
         <button
           className={ currentTab === TabName.Characteristics ? 'tabs__control is-active' : 'tabs__control' }

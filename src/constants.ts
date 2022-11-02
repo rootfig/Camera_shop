@@ -6,6 +6,7 @@ export const REVIEWS_COUNT = 3;
 export const MAX_RATING = 5;
 export const RATING_VALUES = Array.from({ length: MAX_RATING }, (it, index) => index + 1).reverse();
 export const MIN_REVIEW_LENGTH = 5;
+export const SLIDER_STEP_COUNT = 3;
 
 export const AppRoute = {
   Main: '/',

@@ -3,7 +3,7 @@ import { NameSpace } from '../../constants';
 import { PromoSliceState } from '../../types/state';
 import { fetchPromoAction } from '../api-actions';
 
-const initialState: PromoSliceState = {
+export const initialState: PromoSliceState = {
   promo: {
     id: 0,
     name: '',
@@ -12,7 +12,6 @@ const initialState: PromoSliceState = {
     previewImgWebp: '',
     previewImgWebp2x: '',
   },
-  isLoading: true,
   isLoaded: false,
   isLoadError: false,
 };
@@ -24,7 +23,7 @@ export const promoSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchPromoAction.pending, (state) => {
-        state.isLoading = true;
+        state.isLoaded = true;
         state.isLoadError = false;
       })
       .addCase(fetchPromoAction.fulfilled, (state, action) => {

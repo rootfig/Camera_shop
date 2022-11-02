@@ -10,7 +10,7 @@ function SimilarItem({ similar }: SimilarItemProps):JSX.Element {
 
   const {id, price, previewImgWebp, previewImgWebp2x, reviewCount, rating, category, name} = similar;
   return (
-    <div className="product-card is-active">
+    <div className="product-card is-active" data-testid='similar-item'>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={ `../${ previewImgWebp }, ../${ previewImgWebp2x }`} />

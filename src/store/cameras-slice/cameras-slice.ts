@@ -3,7 +3,7 @@ import { NameSpace } from '../../constants';
 import { CamerasSliceState } from '../../types/state';
 import { fetchCamerasAction } from '../api-actions';
 
-const initialState: CamerasSliceState = {
+export const initialState: CamerasSliceState = {
   cameras: [],
   isLoaded: false,
   isLoadError: false,

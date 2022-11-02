@@ -18,17 +18,29 @@ const fakeApp = (
 );
 
 describe('Application Errors', () => {
-  it('On a bad link', () => {
+  it('render NotFoundScreen', () => {
 
     render(fakeApp);
 
     expect(screen.getByText(/Страница не найдена/i)).toBeInTheDocument();
   });
 
-  it('Error screen renders', () => {
+  it('render ErrorScreen', () => {
     render(<ErrorScreen/>);
 
     expect(screen.getByText('Sorry!')).toBeInTheDocument();
+  });
+
+  it ('render CatalogScreen', () => {
+    history.push('/catalog/1');
+    render(fakeApp);
+    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
+  });
+
+  it ('render ProductScreen', () => {
+    history.push('/product/1');
+    render(fakeApp);
+    expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
   });
 });
 

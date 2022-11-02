@@ -4,9 +4,8 @@ import { SimilarSliceState } from '../../types/state';
 import { fetchSimilarAction } from '../api-actions';
 
 
-const initialState: SimilarSliceState = {
+export const initialState: SimilarSliceState = {
   similars: [],
-  isLoading: true,
   isLoaded: false,
   isLoadError: false,
 };
@@ -18,7 +17,7 @@ export const similarSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchSimilarAction.pending, (state) => {
-        state.isLoading = true;
+        state.isLoaded = true;
         state.isLoadError = false;
       })
       .addCase(fetchSimilarAction.fulfilled, (state, action) => {

@@ -8,7 +8,7 @@ function ReviewSuccess({handleReviewSuccessButtonClick, isReviewSuccessOpen}: Re
   useKeydown('Escape', () => handleReviewSuccessButtonClick);
 
   return (
-    <div className={isReviewSuccessOpen ? 'modal is-active modal--narrow' : 'modal modal--narrow'}>
+    <div className={isReviewSuccessOpen ? 'modal is-active modal--narrow' : 'modal modal--narrow'} data-testid='review-success'>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleReviewSuccessButtonClick}></div>
         <div className="modal__content">

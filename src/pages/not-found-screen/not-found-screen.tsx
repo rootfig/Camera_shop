@@ -20,7 +20,7 @@ function NotFoundScreen(): JSX.Element {
 
           <Banner />
 
-          <div className="page-content">
+          <div className="page-content" data-testid='not-found-screen'>
 
             <p >404 Страница не найдена</p>
             <Link style={{fontSize: 40}} to={`${AppRoute.Catalog}/1`}> Вернуться в каталог</Link>

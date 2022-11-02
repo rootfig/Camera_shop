@@ -1,7 +1,7 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 import { REVIEWS_COUNT } from '../constants';
-import { DEFAULT_CAMERAS_TOTAL_COUNT, makeFakeCamera, makeFakeCameras, makeFakePromoCamera, makeFakeReviews } from './moks';
+import { makeFakeCamera, makeFakeCameras, makeFakePromoCamera, makeFakeReviews } from './moks';
 
 const middlewares = [thunk];
 
@@ -15,7 +15,6 @@ export const store = mockStore({
   CAMERAS: {
     cameras: cameras,
     isLoaded: false,
-    camerasCount: DEFAULT_CAMERAS_TOTAL_COUNT,
   },
   CAMERA: {
     camera: camera,
@@ -31,6 +30,8 @@ export const store = mockStore({
     promo: promo,
   },
   SIMILAR: {
-    similarCameras: cameras,
+    similars: cameras,
+    isLoaded: false,
+    isLoadError: false,
   }
 });
