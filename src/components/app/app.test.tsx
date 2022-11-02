@@ -17,7 +17,7 @@ const fakeApp = (
 
 );
 
-describe('Application Errors', () => {
+describe('Application', () => {
   it('render NotFoundScreen', () => {
 
     render(fakeApp);
