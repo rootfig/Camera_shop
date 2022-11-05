@@ -70,10 +70,11 @@ function ProductScreen(): JSX.Element {
               reviewsListCount={reviewsListCount}
             />
           </div>
+          <UpButton />
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
           <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} isReviewSuccessOpen={isReviewSuccessOpen} />
         </main>
-        <UpButton />
+
         <Footer />
       </div>
     </HelmetProvider>

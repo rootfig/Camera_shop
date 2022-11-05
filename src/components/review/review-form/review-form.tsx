@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MIN_REVIEW_LENGTH, RatingTitle, RATING_VALUES } from '../../../constants';
 import { useAppDispatch } from '../../../hooks';
@@ -19,6 +19,7 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
 
   const {
     register,
+    setFocus,
     formState: {
       errors,
     },
@@ -26,6 +27,11 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
   } = useForm<ReviewPost>({
     mode: 'onChange'
   });
+
+
+  useEffect(() => {
+    setFocus('rating');
+  }, [setFocus]);
 
   const handleSubmitForm = handleSubmit((review) => {
     const reviewData = {
@@ -159,7 +165,7 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
               <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
             </form>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => setActive(false)}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onBlur={() => setFocus('rating')} onClick={() => setActive(false)}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
