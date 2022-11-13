@@ -7,7 +7,7 @@ import { selectCameras } from '../../../store/cameras-slice/selectorts';
 import { Camera } from '../../../types/camera';
 
 
-function FormSearch() {
+function FormSearch(): JSX.Element {
   const cameras = useAppSelector(selectCameras);
   const [filtredCameras, setFiltredCameras] = useState<Camera[]>([]);
   const [wordEntered, setWordEntered] = useState('');
