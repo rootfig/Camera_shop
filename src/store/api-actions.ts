@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../constants';
-import { Camera } from '../types/camera';
+import { Camera, Cameras, CamerasPayloadType } from '../types/camera';
 import { AppDispatch, State } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Promo } from '../types/promo';
@@ -17,16 +17,19 @@ const ApiAction = {
   PostReviews: 'user/postReviews'
 };
 
-export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
+export const fetchCamerasAction = createAsyncThunk<Cameras, CamerasPayloadType | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   ApiAction.FetchCameras,
-  async (_arg, { extra: api}) => {
-    const { data } = await api.get<Camera[]>(APIRoute.Cameras);
-    return data;
-  }
+  async (params, {dispatch, extra: api}) => {
+    const {data, headers} = await api.get<Camera[]>(APIRoute.Cameras, { params });
+    return {
+      data: data,
+      dataTotalCount: Number(headers['x-total-count'])
+    };
+  },
 );
 
 export const fetchCameraAction = createAsyncThunk<Camera, number, {
@@ -84,4 +87,16 @@ export const postReviewAction = createAsyncThunk<void, ReviewPost, {
   async (reviewPost: ReviewPost, { extra: api}) => {
     await api.post<ReviewPost>(APIRoute.Reviews, reviewPost);
   }
+);
+
+export const fetchPriceCamerasAction = createAsyncThunk<Camera[], CamerasPayloadType | undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'dataProducts/fetchPriceCameras',
+  async (params, {dispatch, extra: api}) => {
+    const {data} = await api.get<Camera[]>(APIRoute.Cameras, {params});
+    return data;
+  },
 );

@@ -10,7 +10,7 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
-html {
+ html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -1298,7 +1298,7 @@ button,
   font-size: 14px;
   line-height: 18px;
   color: #ed6041;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: opacity 0.3s ease;
   -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
@@ -1795,6 +1795,7 @@ button,
   margin: 37px 0 0;
   padding-bottom: 40px;
   border-bottom: 2px solid #f4f4fc;
+
 }
 
 .catalog__aside {
@@ -1809,6 +1810,7 @@ button,
   -ms-grid-row-span: 2;
   -ms-grid-column: 3;
   grid-area: content;
+
 }
 
 .catalog-filter {
@@ -2040,8 +2042,8 @@ button,
 }
 
 .catalog-sort__btn-text input[type="radio"]:focus + label {
-  color: #7575e2;
-  background-color: #e8e8fa;
+  /* olor: #7575e2; */
+  /* background-color: #e8e8fa; */
 }
 
 .catalog-sort__btn {
@@ -2117,8 +2119,8 @@ button,
 }
 
 .catalog-sort__btn input[type="radio"]:focus + label {
-  color: #7575e2;
-  background-color: #e8e8fa;
+  /* color: #7575e2;
+  background-color: #e8e8fa; */
 }
 
 .form-checkbox {
@@ -2204,6 +2206,7 @@ button,
   row-gap: 40px;
   -ms-grid-columns: (1fr)[3];
   grid-template-columns: repeat(3, 1fr);
+  position: relative;
 }
 
 .rate {
@@ -3624,7 +3627,6 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    pointer-events: none;
   }
 
   .link:hover,

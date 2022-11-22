@@ -7,36 +7,50 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
-import { selectCameras } from '../../store/cameras-slice/selectorts';
-import { useEffect, useState } from 'react';
-import { Camera } from '../../types/camera';
-import { useParams } from 'react-router-dom';
-
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getProductsTotalCount, selectCameras } from '../../store/cameras-slice/selectorts';
+import { useEffect, useMemo, useState } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { fetchCamerasAction, fetchPriceCamerasAction } from '../../store/api-actions';
+import { PRODUCTS_COUNT, QueryParams, SortOrder, SortType } from '../../constants';
 
 function CatalogScreen(): JSX.Element {
-  const startNumbPage = 1;
-  const maxImgPerPage = 9;
 
-  const params = useParams();
-  const currentNumbPage = Number(params.id) === null || typeof(params.id) === undefined ? startNumbPage : Number(params.id);
-
+  const dispatch = useAppDispatch();
+  const {id} = useParams();
+  const [searchParams] = useSearchParams();
   const cameras = useAppSelector(selectCameras);
-  const [products, setProducts] = useState<Camera[]>([]);
-  const [currentPage, setCurrentPage] = useState(startNumbPage);
-  const [productsPerPage] = useState(maxImgPerPage);
+  const productsTotalCount = useAppSelector(getProductsTotalCount);
+
+  const [activePage, setActivePage] = useState(Number(id));
 
   useEffect(() => {
-    if (cameras) {
-      setCurrentPage(currentNumbPage);
-      setProducts(cameras);
-    }
-  },[cameras, currentNumbPage]);
-  const indexOfLastPost = currentPage * productsPerPage;
-  const indexOfFirstPost = indexOfLastPost - productsPerPage;
-  const currentProducts = cameras.slice(indexOfFirstPost, indexOfLastPost);
+    dispatch(fetchPriceCamerasAction({
+      [QueryParams.Sort]: SortType.Price,
+      [QueryParams.Order]: SortOrder.Asc,
+      [QueryParams.Category]: searchParams.get(QueryParams.Category),
+      [QueryParams.Type]: searchParams.get(QueryParams.Type),
+      [QueryParams.Level]: searchParams.get(QueryParams.Level)
+    }));
+  }, [dispatch, searchParams, id]);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  useEffect(() => {
+    dispatch(fetchCamerasAction({
+      [QueryParams.Limit]: PRODUCTS_COUNT,
+      [QueryParams.Page]: Number(id),
+      [QueryParams.Sort]: searchParams.get(QueryParams.Sort),
+      [QueryParams.Order]: searchParams.get(QueryParams.Order),
+      [QueryParams.Category]: searchParams.get(QueryParams.Category),
+      [QueryParams.Type]: searchParams.get(QueryParams.Type),
+      [QueryParams.Level]: searchParams.get(QueryParams.Level),
+      [QueryParams.PriceMin]: searchParams.get(QueryParams.PriceMin),
+      [QueryParams.PriceMax]: searchParams.get(QueryParams.PriceMax),
+    }));
+  },[dispatch, activePage, id, searchParams]);
+
+  const totalPages = useMemo(() => (
+    Math.ceil(productsTotalCount / PRODUCTS_COUNT)
+  ), [productsTotalCount]);
 
   return(
     <HelmetProvider>
@@ -67,13 +81,12 @@ function CatalogScreen(): JSX.Element {
 
                     <CatalogSort />
 
-                    <CatalogList cameras={currentProducts} />
+                    <CatalogList cameras={cameras} />
 
                     <Pagination
-                      productsPerPage={productsPerPage}
-                      totalProducts={products.length}
-                      paginate={paginate}
-                      currentPage={currentPage}
+                      currentPage={Number(id)}
+                      setActivePage={setActivePage}
+                      totalPages={totalPages}
                     />
 
                   </div>

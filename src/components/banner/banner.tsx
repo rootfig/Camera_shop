@@ -1,8 +1,18 @@
+import { useEffect } from 'react';
 import { AppRoute } from '../../constants';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchPromoAction } from '../../store/api-actions';
 import { selectPromo } from '../../store/promo-slice/selectors';
 
+
 function Banner(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPromoAction());
+  }, [dispatch]);
+
+
   const promo = useAppSelector(selectPromo);
 
   const { id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = promo;

@@ -7,6 +7,9 @@ export const MAX_RATING = 5;
 export const RATING_VALUES = Array.from({ length: MAX_RATING }, (it, index) => index + 1).reverse();
 export const MIN_REVIEW_LENGTH = 5;
 export const SLIDER_STEP_COUNT = 3;
+export const CAMERAS_COUNT_DEFAULT = 0;
+export const START_PAGE_COUNT = 1;
+export const PAGE_STEP = 1;
 
 export const AppRoute = {
   Main: '/',
@@ -57,3 +60,35 @@ export const RatingTitle: {[key: number]: string} = {
   4: 'Хорошо',
   5: 'Отлично',
 } as const;
+
+export enum QueryParams {
+  Page = '_page',
+  End = '_end',
+  Limit = '_limit',
+  NameLike = 'name_like',
+  Sort = '_sort',
+  Order = '_order',
+  PriceMin = 'price_gte',
+  PriceMax = 'price_lte',
+  Type = 'type',
+  Category = 'category',
+  Level = 'level',
+}
+
+export enum SortType {
+  Price = 'price',
+  Rating = 'rating',
+}
+
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
+export const FILTER_PARAM: string[] = [
+  QueryParams.PriceMin,
+  QueryParams.PriceMax,
+  QueryParams.Category,
+  QueryParams.Type,
+  QueryParams.Level,
+];
