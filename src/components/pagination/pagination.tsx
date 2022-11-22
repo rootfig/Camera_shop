@@ -1,53 +1,45 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../constants';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
 
 type PaginationProps = {
-  productsPerPage: number;
-  totalProducts: number;
-  paginate: (pageNumber: number) => void;
   currentPage: number;
-};
+  setActivePage: (_arg: number) => void;
+  totalPages: number;
+}
 
-function Pagination({ productsPerPage, totalProducts, paginate, currentPage }: PaginationProps): JSX.Element {
-  const pageNumbers = [];
-  const totalPages = Math.ceil(totalProducts / productsPerPage);
+function Pagination({currentPage, totalPages, setActivePage } : PaginationProps): JSX.Element {
 
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  return (
+  return(
     <div className="pagination">
       <ul className="pagination__list">
+        {currentPage !== 1 &&
         <li className={currentPage === 1 ? 'pagination__item visually-hidden' : 'pagination__item'}>
           <Link
             className="pagination__link pagination__link--text"
-            to={`${AppRoute.Catalog}/${ currentPage - 1 }`}
-            onClick={() => paginate(currentPage)}
+            to={`${AppRoute.Catalog}/${currentPage - 1}`}
+            onClick={() => setActivePage(currentPage - 1)}
           >Назад
           </Link>
-        </li>
-        { pageNumbers.map((number) => (
-          <li key={number}
-            className="pagination__item"
-          >
+        </li>}
+        {Array.from({length: totalPages}, (_value, index) => (
+          <li className="pagination__item" key={index}>
             <Link
-              className={currentPage === number ? 'pagination__link pagination__link--active' : 'pagination__link'}
-              to={`${AppRoute.Catalog}/${ number }`}
-              onClick={() => paginate(number)}
-            >
-              {number}
+              className={currentPage === index + 1 ? 'pagination__link pagination__link--active' : 'pagination__link'}
+              to={`${AppRoute.Catalog}/${index + 1}`}
+              onClick={() => setActivePage(index + 1)}
+            >{index + 1}
             </Link>
           </li>
         ))}
+        {currentPage !== totalPages &&
         <li className={currentPage === totalPages ? 'pagination__item visually-hidden' : 'pagination__item'}>
           <Link
             className="pagination__link pagination__link--text"
-            to={`${AppRoute.Catalog}/${ currentPage + 1 }`}
-            onClick={() => paginate(currentPage)}
+            to={`${AppRoute.Catalog}/${currentPage + 1}`}
+            onClick={() => setActivePage(currentPage + 1)}
           >Далее
           </Link>
-        </li>
+        </li>}
       </ul>
     </div>
   );

@@ -7,10 +7,18 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
+export type ProductPriceRange = {
+  minPrice: number;
+  maxPrice: number;
+}
 export type CamerasSliceState = {
   cameras: Camera[];
   isLoaded: boolean;
   isLoadError: boolean;
+  camerasCount: number;
+  productsTotalCount: number;
+  productsPriceRange: ProductPriceRange;
+  isFilterReset: boolean;
 }
 
 export type SimilarSliceState = {
