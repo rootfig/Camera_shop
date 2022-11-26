@@ -8,11 +8,12 @@ import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getProductsTotalCount, selectCameras } from '../../store/cameras-slice/selectorts';
+import { selectProductsTotalCount, selectCameras, selectIsCamerasLoaded } from '../../store/cameras-slice/selectorts';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store/api-actions';
 import { PRODUCTS_COUNT, QueryParams, SortOrder, SortType } from '../../constants';
+import Loader from '../../components/loader/loader';
 
 function CatalogScreen(): JSX.Element {
 
@@ -20,8 +21,8 @@ function CatalogScreen(): JSX.Element {
   const {id} = useParams();
   const [searchParams] = useSearchParams();
   const cameras = useAppSelector(selectCameras);
-  const productsTotalCount = useAppSelector(getProductsTotalCount);
-
+  const productsTotalCount = useAppSelector(selectProductsTotalCount);
+  const isCamerasLoaded = useAppSelector(selectIsCamerasLoaded);
   const [activePage, setActivePage] = useState(Number(id));
 
   useEffect(() => {
@@ -76,20 +77,20 @@ function CatalogScreen(): JSX.Element {
                 <div className="page-content__columns">
 
                   <CatalogFilter />
+                  {isCamerasLoaded ? <Loader /> :
+                    <div className="catalog__content">
 
-                  <div className="catalog__content">
+                      <CatalogSort />
 
-                    <CatalogSort />
+                      <CatalogList cameras={cameras} />
 
-                    <CatalogList cameras={cameras} />
+                      <Pagination
+                        currentPage={Number(id)}
+                        setActivePage={setActivePage}
+                        totalPages={totalPages}
+                      />
 
-                    <Pagination
-                      currentPage={Number(id)}
-                      setActivePage={setActivePage}
-                      totalPages={totalPages}
-                    />
-
-                  </div>
+                    </div>}
                 </div>
               </div>
             </section>

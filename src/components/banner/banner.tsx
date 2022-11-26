@@ -4,10 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchPromoAction } from '../../store/api-actions';
 import { selectPromo } from '../../store/promo-slice/selectors';
 
-
 function Banner(): JSX.Element {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(fetchPromoAction());
   }, [dispatch]);

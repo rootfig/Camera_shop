@@ -26,17 +26,6 @@ export const camerasSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchAllCamerasAction.pending, (state) => {
-        state.isLoaded = true;
-        state.isLoadError = false;
-      })
-      .addCase(fetchAllCamerasAction.fulfilled, (state, action) => {
-        state.allCameras = action.payload;
-      })
-      .addCase(fetchAllCamerasAction.rejected, (state) => {
-        state.isLoaded = false;
-        state.isLoadError = true;
-      })
       .addCase(fetchCamerasByParamsAction.pending, (state) => {
         state.isLoaded = true;
         state.isLoadError = false;
@@ -55,6 +44,9 @@ export const camerasSlice = createSlice({
         const cameras = action.payload;
         state.productsPriceRange.minPrice = cameras[0].price;
         state.productsPriceRange.maxPrice = cameras[cameras.length - 1].price;
+      })
+      .addCase(fetchAllCamerasAction.fulfilled, (state, action) => {
+        state.allCameras = action.payload;
       });
   },
 });
