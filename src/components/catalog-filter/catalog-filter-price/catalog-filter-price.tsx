@@ -4,11 +4,11 @@ import { QueryParams } from '../../../constants';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import { changeIsFilterReset } from '../../../store/cameras-slice/cameras-slice';
 
-import { getIsFilterReset, getPriceProducts } from '../../../store/cameras-slice/selectorts';
+import { getIsFilterReset, selectPriceProducts } from '../../../store/cameras-slice/selectorts';
 
 function CatalogFilterPrice(): JSX.Element {
   const dispatch = useAppDispatch();
-  const priceProducts = useAppSelector(getPriceProducts);
+  const priceProducts = useAppSelector(selectPriceProducts);
   const isFilterReset = useAppSelector(getIsFilterReset);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentInputPrice, setCurrentInputPrice] = useState<{minPrice: null | number; maxPrice: null | number}>({

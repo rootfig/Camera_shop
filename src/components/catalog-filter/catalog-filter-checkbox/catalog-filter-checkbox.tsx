@@ -21,6 +21,8 @@ function CatalogFilterCheckbox(): JSX.Element {
     }
 
     setSearchParams(searchParams);
+    // eslint-disable-next-line no-console
+    console.log(currentParamValues);
   };
 
   return(
