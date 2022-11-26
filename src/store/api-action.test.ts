@@ -6,7 +6,7 @@ import { Action } from 'redux';
 import { State } from '../types/state';
 import { APIRoute } from '../constants';
 import { CAMERAS_TOTAL_COUNT, DEFAULT_CAMERAS_TOTAL_COUNT, makeFakeAddReview, makeFakeCamera, makeFakeCameras, makeFakePromoCamera, makeFakeReviews } from '../mocks/moks';
-import { fetchCameraAction, fetchCamerasAction, fetchPromoAction, fetchReviewsAction, fetchSimilarAction, postReviewAction } from './api-actions';
+import { fetchCameraAction, fetchCamerasByParamsAction, fetchPromoAction, fetchReviewsAction, fetchSimilarAction, postReviewAction } from './api-actions';
 
 describe('Async actions', () => {
   const api = createAPI();
@@ -18,7 +18,7 @@ describe('Async actions', () => {
       Action,
       ThunkDispatch<State, typeof api, Action>
     >(middlewares);
-  it('should dispatch fetchCamerasAction when GET /cameras', async () => {
+  it('should dispatch fetchCamerasByParamsAction when GET /cameras', async () => {
     const mockCameras = makeFakeCameras();
     mockAPI
       .onGet(APIRoute.Cameras)
@@ -26,13 +26,13 @@ describe('Async actions', () => {
 
     const store = mockStore();
 
-    await store.dispatch(fetchCamerasAction());
+    await store.dispatch(fetchCamerasByParamsAction());
 
     const actions = store.getActions().map(({ type }:Action<string>) => type);
 
     expect(actions).toEqual([
-      fetchCamerasAction.pending.type,
-      fetchCamerasAction.fulfilled.type,
+      fetchCamerasByParamsAction.pending.type,
+      fetchCamerasByParamsAction.fulfilled.type,
     ]);
   });
 

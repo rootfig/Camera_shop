@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getProductsTotalCount, selectCameras } from '../../store/cameras-slice/selectorts';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { fetchCamerasAction, fetchPriceCamerasAction } from '../../store/api-actions';
+import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store/api-actions';
 import { PRODUCTS_COUNT, QueryParams, SortOrder, SortType } from '../../constants';
 
 function CatalogScreen(): JSX.Element {
@@ -35,7 +35,7 @@ function CatalogScreen(): JSX.Element {
   }, [dispatch, searchParams, id]);
 
   useEffect(() => {
-    dispatch(fetchCamerasAction({
+    dispatch(fetchCamerasByParamsAction({
       [QueryParams.Limit]: PRODUCTS_COUNT,
       [QueryParams.Page]: Number(id),
       [QueryParams.Sort]: searchParams.get(QueryParams.Sort),

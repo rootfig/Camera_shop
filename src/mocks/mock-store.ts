@@ -1,6 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
-import { REVIEWS_COUNT } from '../constants';
+import { PRODUCTS_COUNT, REVIEWS_COUNT } from '../constants';
 import { makeFakeCamera, makeFakeCameras, makeFakePromoCamera, makeFakeReviews } from './moks';
 
 const middlewares = [thunk];
@@ -13,8 +13,15 @@ const reviews = makeFakeReviews();
 const mockStore = configureMockStore(middlewares);
 export const store = mockStore({
   CAMERAS: {
+    allCameras: cameras,
     cameras: cameras,
+    isLoadedError: false,
     isLoaded: false,
+    productsTotalCount: PRODUCTS_COUNT,
+    productsPriceRange: {
+      minPrice: 20000,
+      maxPrice: 10000,
+    }
   },
   CAMERA: {
     camera: camera,

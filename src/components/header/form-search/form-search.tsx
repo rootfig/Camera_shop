@@ -1,16 +1,22 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../constants';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useKeydown from '../../../hooks/use-keydown';
-import { selectCameras } from '../../../store/cameras-slice/selectorts';
+import { fetchAllCamerasAction } from '../../../store/api-actions';
+import { selectAllCameras } from '../../../store/cameras-slice/selectorts';
 import { Camera } from '../../../types/camera';
 
 
 function FormSearch(): JSX.Element {
-  const cameras = useAppSelector(selectCameras);
+  const dispatch = useAppDispatch();
+  const cameras = useAppSelector(selectAllCameras);
   const [filtredCameras, setFiltredCameras] = useState<Camera[]>([]);
   const [wordEntered, setWordEntered] = useState('');
+
+  useEffect(() => {
+    dispatch(fetchAllCamerasAction());
+  }, [dispatch]);
 
   const handleInputFilter = (event: ChangeEvent<HTMLInputElement>) => {
     const searchWord = event.target.value;

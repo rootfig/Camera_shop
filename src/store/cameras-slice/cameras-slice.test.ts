@@ -1,6 +1,6 @@
 import { makeFakeCameras } from '../../mocks/moks';
 import { CamerasSliceState } from '../../types/state';
-import { fetchCamerasAction } from '../api-actions';
+import { fetchCamerasByParamsAction } from '../api-actions';
 import { camerasSlice, initialState } from './cameras-slice';
 
 const cameras = makeFakeCameras();
@@ -12,31 +12,52 @@ describe('Reducer: camerasSlice', () => {
       .toEqual(state);
   });
 
-  describe('fetchCamerasAction test', () => {
-    it('should update fulfilled state by fetchCamerasAction', () => {
-      expect(camerasSlice.reducer(state, {type: fetchCamerasAction.fulfilled.type, payload: cameras}))
+  describe('fetchCamerasByParamsAction test', () => {
+    it('should update fulfilled state by fetchCamerasByParamsAction', () => {
+      expect(camerasSlice.reducer(state, {type: fetchCamerasByParamsAction.fulfilled.type, payload: {data: cameras, dataTotalCount: cameras.length}}))
         .toEqual({
+          allCameras: [],
           cameras: cameras,
           isLoaded: false,
           isLoadError: false,
+          productsTotalCount: cameras.length,
+          productsPriceRange: {
+            minPrice: 0,
+            maxPrice: 0,
+          },
+          isFilterReset: false,
         });
     });
 
-    it('should update pending state by fetchCamerasAction', () => {
-      expect(camerasSlice.reducer(state, {type: fetchCamerasAction.pending.type}))
+    it('should update pending state by fetchCamerasByParamsAction', () => {
+      expect(camerasSlice.reducer(state, {type: fetchCamerasByParamsAction.pending.type}))
         .toEqual({
+          allCameras: [],
           cameras: [],
           isLoaded: true,
           isLoadError: false,
+          productsTotalCount: 0,
+          productsPriceRange: {
+            minPrice: 0,
+            maxPrice: 0,
+          },
+          isFilterReset: false,
         });
     });
 
-    it('should update rejected state by fetchCamerasAction', () => {
-      expect(camerasSlice.reducer(state, {type: fetchCamerasAction.rejected.type}))
+    it('should update rejected state by fetchCamerasByParamsAction', () => {
+      expect(camerasSlice.reducer(state, {type: fetchCamerasByParamsAction.rejected.type}))
         .toEqual({
+          allCameras: [],
           cameras: [],
           isLoaded: false,
           isLoadError: true,
+          productsTotalCount: 0,
+          productsPriceRange: {
+            minPrice: 0,
+            maxPrice: 0,
+          },
+          isFilterReset: false,
         });
     });
   });

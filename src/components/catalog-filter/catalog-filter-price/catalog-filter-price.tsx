@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useSearchParams} from 'react-router-dom';
-import { QueryParams, REQUEST_TIMEOUT } from '../../../constants';
+import { QueryParams } from '../../../constants';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import { changeIsFilterReset } from '../../../store/cameras-slice/cameras-slice';
 
@@ -65,13 +65,13 @@ function CatalogFilterPrice(): JSX.Element {
         setIsUpdatePrice(true);
       }
 
-    }, REQUEST_TIMEOUT);
+    }, 1000);
 
     return () => clearTimeout(changeRangePrice);
   }, [currentInputPrice, priceProducts, isFilterReset, dispatch]);
 
   return(
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid='catalog-filter-price'>
       <legend className="title title--h5">Цена, ₽</legend>
       <div className="catalog-filter__price-range">
         <div className="custom-input">
@@ -82,7 +82,6 @@ function CatalogFilterPrice(): JSX.Element {
               placeholder={`от ${String(priceProducts.minPrice)}`}
               value={currentInputPrice.minPrice !== null ? currentInputPrice.minPrice : '' }
               onChange={(evt) => setCurrentInputPrice({...currentInputPrice, minPrice: Number(evt.target.value)})}
-              data-testid="input-price-min"
             />
           </label>
         </div>
@@ -94,7 +93,6 @@ function CatalogFilterPrice(): JSX.Element {
               placeholder={`до ${String(priceProducts.maxPrice)}`}
               value={currentInputPrice.maxPrice !== null ? currentInputPrice.maxPrice : '' }
               onChange={(evt) => setCurrentInputPrice({...currentInputPrice, maxPrice: Number(evt.target.value)})}
-              data-testid="input-price-max"
             />
           </label>
         </div>
