@@ -8,6 +8,7 @@ import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
 
 const ApiAction = {
+  FetchAllCameras: 'data/fetchAllCameras',
   FetchCameras: 'data/fetchCameras',
   FetchCamera: 'data/fetchCamera',
   FetchPromo:'data/fetchPromo',
@@ -17,7 +18,19 @@ const ApiAction = {
   PostReviews: 'user/postReviews'
 };
 
-export const fetchCamerasAction = createAsyncThunk<Cameras, CamerasPayloadType | undefined, {
+export const fetchAllCamerasAction = createAsyncThunk<Camera[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  ApiAction.FetchAllCameras,
+  async (_arg, { extra: api}) => {
+    const { data } = await api.get<Camera[]>(APIRoute.Cameras);
+    return data;
+  }
+);
+
+export const fetchCamerasByParamsAction = createAsyncThunk<Cameras, CamerasPayloadType | undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

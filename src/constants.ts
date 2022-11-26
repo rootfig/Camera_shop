@@ -92,3 +92,26 @@ export const FILTER_PARAM: string[] = [
   QueryParams.Type,
   QueryParams.Level,
 ];
+
+export const FILTERS = [
+  {
+    title: 'Категория',
+    param: QueryParams.Category,
+    values: ['Фотоаппарат', 'Видеокамера']
+  },
+  {
+    title: 'Тип камеры',
+    param: QueryParams.Type,
+    values: ['Цифровая', 'Плёночная', 'Моментальная', 'Коллекционная']
+  },
+  {
+    title: 'Уровень',
+    param: QueryParams.Level,
+    values: ['Нулевой', 'Любительский', 'Профессиональный']
+  },
+];
+
+export const FILTER_RESTRICTION = {
+  category: ['Видеокамера'],
+  type: ['Плёночная', 'Моментальная']
+};

@@ -12,10 +12,10 @@ export type ProductPriceRange = {
   maxPrice: number;
 }
 export type CamerasSliceState = {
+  allCameras: Camera [];
   cameras: Camera[];
   isLoaded: boolean;
   isLoadError: boolean;
-  camerasCount: number;
   productsTotalCount: number;
   productsPriceRange: ProductPriceRange;
   isFilterReset: boolean;

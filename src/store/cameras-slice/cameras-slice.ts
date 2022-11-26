@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CAMERAS_COUNT_DEFAULT, NameSpace } from '../../constants';
+import { NameSpace } from '../../constants';
 import { CamerasSliceState } from '../../types/state';
-import { fetchCamerasAction, fetchPriceCamerasAction } from '../api-actions';
+import { fetchAllCamerasAction, fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../api-actions';
 
 export const initialState: CamerasSliceState = {
+  allCameras: [],
   cameras: [],
   isLoaded: false,
   isLoadError: false,
-  camerasCount: CAMERAS_COUNT_DEFAULT,
   productsTotalCount: 0,
   productsPriceRange: {
     minPrice: 0,
@@ -26,17 +26,28 @@ export const camerasSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCamerasAction.pending, (state) => {
+      .addCase(fetchAllCamerasAction.pending, (state) => {
         state.isLoaded = true;
         state.isLoadError = false;
       })
-      .addCase(fetchCamerasAction.fulfilled, (state, action) => {
+      .addCase(fetchAllCamerasAction.fulfilled, (state, action) => {
+        state.allCameras = action.payload;
+      })
+      .addCase(fetchAllCamerasAction.rejected, (state) => {
+        state.isLoaded = false;
+        state.isLoadError = true;
+      })
+      .addCase(fetchCamerasByParamsAction.pending, (state) => {
+        state.isLoaded = true;
+        state.isLoadError = false;
+      })
+      .addCase(fetchCamerasByParamsAction.fulfilled, (state, action) => {
         state.cameras = action.payload.data;
         state.productsTotalCount = action.payload.dataTotalCount;
         state.isLoaded = false;
         state.isLoadError = false;
       })
-      .addCase(fetchCamerasAction.rejected, (state) => {
+      .addCase(fetchCamerasByParamsAction.rejected, (state) => {
         state.isLoaded = false;
         state.isLoadError = true;
       })

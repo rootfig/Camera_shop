@@ -1,30 +1,6 @@
 import {ChangeEvent} from 'react';
 import {useSearchParams} from 'react-router-dom';
-import { QueryParams } from '../../../constants';
-
-
-const FILTERS = [
-  {
-    title: 'Категория',
-    param: QueryParams.Category,
-    values: ['Фотоаппарат', 'Видеокамера']
-  },
-  {
-    title: 'Тип камеры',
-    param: QueryParams.Type,
-    values: ['Цифровая', 'Плёночная', 'Моментальная', 'Коллекционная']
-  },
-  {
-    title: 'Уровень',
-    param: QueryParams.Level,
-    values: ['Нулевой', 'Любительский', 'Профессиональный']
-  },
-];
-
-const FILTER_RESTRICTION = {
-  category: ['Видеокамера'],
-  type: ['Плёночная', 'Моментальная']
-};
+import { FILTERS, FILTER_RESTRICTION } from '../../../constants';
 
 function CatalogFilterCheckbox(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +26,11 @@ function CatalogFilterCheckbox(): JSX.Element {
   return(
     <>
       {FILTERS.map(({title, param, values}) => (
-        <fieldset className="catalog-filter__block" key={title}>
+        <fieldset
+          className="catalog-filter__block"
+          data-testid='checkbox-filter-item'
+          key={title}
+        >
           <legend className="title title--h5">{title}</legend>
           {values.map((value) => {
             const isDisabledCategory = isCheckDisabledCategory && FILTER_RESTRICTION.category.includes(value);
