@@ -47,13 +47,14 @@ function CatalogScreen(): JSX.Element {
       [QueryParams.PriceMin]: searchParams.get(SearchParams.PriceMin),
       [QueryParams.PriceMax]: searchParams.get(SearchParams.PriceMax),
     }));
-  },[dispatch, activePage, id, searchParams]);
+  },[dispatch, activePage, id, searchParams, cameras.length]);
 
   const totalPages = useMemo(() => (
     Math.ceil(productsTotalCount / PRODUCTS_COUNT)
   ), [productsTotalCount]);
   // eslint-disable-next-line no-console
   console.log('Количество камер: ', cameras.length);
+
   return(
     <HelmetProvider>
       <div className="wrapper">
