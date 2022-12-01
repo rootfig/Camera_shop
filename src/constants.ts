@@ -44,20 +44,6 @@ export const RatingTitle: {[key: number]: string} = {
   5: 'Отлично',
 } as const;
 
-// type QueryParamsType = {
-//   Page: string;
-//   End: string;
-//   Limit: string;
-//   NameLike: string;
-//   Sort: string;
-//   Order: string;
-//   PriceMin: string;
-//   PriceMax: string;
-//   Type: string[];
-//   Category: string[];
-//   Level: string[];
-// }
-
 export const QueryParams = {
   Page: '_page',
   End: '_end',

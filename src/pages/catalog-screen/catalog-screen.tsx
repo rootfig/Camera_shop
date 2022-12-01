@@ -20,7 +20,7 @@ function CatalogScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const [searchParams] = useSearchParams();
-  const cameras = useAppSelector(selectCameras);
+
   const productsTotalCount = useAppSelector(selectProductsTotalCount);
   const isCamerasLoaded = useAppSelector(selectIsCamerasLoaded);
   const [activePage, setActivePage] = useState(Number(id));
@@ -34,7 +34,7 @@ function CatalogScreen(): JSX.Element {
       [QueryParams.Level]: searchParams.getAll(SearchParams.Level),
     }));
   }, [dispatch, searchParams, id]);
-
+  const cameras = useAppSelector(selectCameras);
   useEffect(() => {
     dispatch(fetchCamerasByParamsAction({
       [QueryParams.Limit]: PRODUCTS_COUNT,
@@ -52,7 +52,8 @@ function CatalogScreen(): JSX.Element {
   const totalPages = useMemo(() => (
     Math.ceil(productsTotalCount / PRODUCTS_COUNT)
   ), [productsTotalCount]);
-
+  // eslint-disable-next-line no-console
+  console.log('Количество камер: ', cameras.length);
   return(
     <HelmetProvider>
       <div className="wrapper">
