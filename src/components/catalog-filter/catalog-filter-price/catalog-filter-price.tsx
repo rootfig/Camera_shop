@@ -79,7 +79,7 @@ function CatalogFilterPrice(): JSX.Element {
             <input
               type="number"
               name={QueryParams.PriceMin}
-              placeholder={`от ${String(priceProducts.minPrice)}`}
+              placeholder={String(priceProducts.minPrice)}
               value={currentInputPrice.minPrice !== null ? currentInputPrice.minPrice : '' }
               onChange={(evt) => setCurrentInputPrice({...currentInputPrice, minPrice: Number(evt.target.value)})}
             />
@@ -90,7 +90,7 @@ function CatalogFilterPrice(): JSX.Element {
             <input
               type="number"
               name={QueryParams.PriceMax}
-              placeholder={`до ${String(priceProducts.maxPrice)}`}
+              placeholder={String(priceProducts.maxPrice)}
               value={currentInputPrice.maxPrice !== null ? currentInputPrice.maxPrice : '' }
               onChange={(evt) => setCurrentInputPrice({...currentInputPrice, maxPrice: Number(evt.target.value)})}
             />
