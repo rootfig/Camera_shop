@@ -44,7 +44,35 @@ export const RatingTitle: {[key: number]: string} = {
   5: 'Отлично',
 } as const;
 
-export enum QueryParams {
+// type QueryParamsType = {
+//   Page: string;
+//   End: string;
+//   Limit: string;
+//   NameLike: string;
+//   Sort: string;
+//   Order: string;
+//   PriceMin: string;
+//   PriceMax: string;
+//   Type: string[];
+//   Category: string[];
+//   Level: string[];
+// }
+
+export const QueryParams = {
+  Page: '_page',
+  End: '_end',
+  Limit: '_limit',
+  NameLike: 'name_like',
+  Sort: '_sort',
+  Order: '_order',
+  PriceMin: 'price_gte',
+  PriceMax: 'price_lte',
+  Type: 'type',
+  Category: 'category',
+  Level: 'level',
+};
+
+export enum SearchParams {
   Page = '_page',
   End = '_end',
   Limit = '_limit',
@@ -69,11 +97,11 @@ export enum SortOrder {
 }
 
 export const FILTER_PARAM: string[] = [
-  QueryParams.PriceMin,
-  QueryParams.PriceMax,
-  QueryParams.Category,
-  QueryParams.Type,
-  QueryParams.Level,
+  SearchParams.PriceMin,
+  SearchParams.PriceMax,
+  SearchParams.Category,
+  SearchParams.Type,
+  SearchParams.Level,
 ];
 
 export const FILTERS = [

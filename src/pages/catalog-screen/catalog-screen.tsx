@@ -12,7 +12,7 @@ import { selectProductsTotalCount, selectCameras, selectIsCamerasLoaded } from '
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store/api-actions';
-import { PRODUCTS_COUNT, QueryParams, SortOrder, SortType } from '../../constants';
+import { PRODUCTS_COUNT, QueryParams, SearchParams, SortOrder, SortType } from '../../constants';
 import Loader from '../../components/loader/loader';
 
 function CatalogScreen(): JSX.Element {
@@ -29,9 +29,9 @@ function CatalogScreen(): JSX.Element {
     dispatch(fetchPriceCamerasAction({
       [QueryParams.Sort]: SortType.Price,
       [QueryParams.Order]: SortOrder.Asc,
-      [QueryParams.Category]: searchParams.get(QueryParams.Category),
-      [QueryParams.Type]: searchParams.get(QueryParams.Type),
-      [QueryParams.Level]: searchParams.get(QueryParams.Level)
+      [QueryParams.Category]: searchParams.getAll(SearchParams.Category),
+      [QueryParams.Type]: searchParams.getAll(SearchParams.Type),
+      [QueryParams.Level]: searchParams.getAll(SearchParams.Level),
     }));
   }, [dispatch, searchParams, id]);
 
@@ -39,13 +39,13 @@ function CatalogScreen(): JSX.Element {
     dispatch(fetchCamerasByParamsAction({
       [QueryParams.Limit]: PRODUCTS_COUNT,
       [QueryParams.Page]: Number(id),
-      [QueryParams.Sort]: searchParams.get(QueryParams.Sort),
-      [QueryParams.Order]: searchParams.get(QueryParams.Order),
-      [QueryParams.Category]: searchParams.get(QueryParams.Category),
-      [QueryParams.Type]: searchParams.get(QueryParams.Type),
-      [QueryParams.Level]: searchParams.get(QueryParams.Level),
-      [QueryParams.PriceMin]: searchParams.get(QueryParams.PriceMin),
-      [QueryParams.PriceMax]: searchParams.get(QueryParams.PriceMax),
+      [QueryParams.Sort]: searchParams.get(SearchParams.Sort),
+      [QueryParams.Order]: searchParams.get(SearchParams.Order),
+      [QueryParams.Category]: searchParams.getAll(SearchParams.Category),
+      [QueryParams.Type]: searchParams.getAll(SearchParams.Type),
+      [QueryParams.Level]: searchParams.getAll(SearchParams.Level),
+      [QueryParams.PriceMin]: searchParams.get(SearchParams.PriceMin),
+      [QueryParams.PriceMax]: searchParams.get(SearchParams.PriceMax),
     }));
   },[dispatch, activePage, id, searchParams]);
 

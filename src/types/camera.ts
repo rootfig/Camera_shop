@@ -1,4 +1,4 @@
-import { QueryParams } from '../constants';
+import { SearchParams } from '../constants';
 
 export type Camera = {
   id: number;
@@ -23,15 +23,15 @@ export type Cameras = {
 }
 
 export type CamerasPayloadType = {
-  [QueryParams.Page]?: number;
-  [QueryParams.End]?: number;
-  [QueryParams.Limit]?: number;
-  [QueryParams.NameLike]?: string;
-  [QueryParams.Sort]?: string | null;
-  [QueryParams.Order]?: string | null;
-  [QueryParams.PriceMin]?: string | null;
-  [QueryParams.PriceMax]?: string | null;
-  [QueryParams.Category]?: string | null;
-  [QueryParams.Type]?: string | null;
-  [QueryParams.Level]?: string | null;
+  [SearchParams.Page]?: number;
+  [SearchParams.End]?: number;
+  [SearchParams.Limit]?: number;
+  [SearchParams.NameLike]?: string;
+  [SearchParams.Sort]?: string | null;
+  [SearchParams.Order]?: string | null;
+  [SearchParams.PriceMin]?: string | null;
+  [SearchParams.PriceMax]?: string | null;
+  [SearchParams.Category]?: string | null;
+  [SearchParams.Type]?: string | null;
+  [SearchParams.Level]?: string | null;
 };
