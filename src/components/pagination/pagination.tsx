@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {Link, useNavigate, useSearchParams} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 
@@ -11,10 +12,14 @@ function Pagination({currentPage, totalPages, setActivePage } : PaginationProps)
   const [searchParams] = useSearchParams();
   const search = searchParams.toString();
   const navigate = useNavigate();
-  if (currentPage > totalPages){
-    navigate(`${AppRoute.Catalog}/${totalPages}?${search}`);
-    setActivePage(totalPages);
-  }
+
+  useEffect(() => {
+    if (currentPage > totalPages){
+      navigate(`${AppRoute.Catalog}/${totalPages}?${search}`);
+      setActivePage(totalPages);
+    }
+  }, [setActivePage,currentPage,navigate, search,totalPages]);
+
   return(
     <div className="pagination" data-testid='pagination'>
       <ul className="pagination__list">
