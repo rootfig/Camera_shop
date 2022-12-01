@@ -52,8 +52,7 @@ function CatalogScreen(): JSX.Element {
   const totalPages = useMemo(() => (
     Math.ceil(productsTotalCount / PRODUCTS_COUNT)
   ), [productsTotalCount]);
-  // eslint-disable-next-line no-console
-  console.log('Количество камер: ', cameras.length);
+
 
   return(
     <HelmetProvider>
