@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useKeydown from '../../../hooks/use-keydown';
@@ -13,7 +13,7 @@ function FormSearch(): JSX.Element {
   const cameras = useAppSelector(selectAllCameras);
   const [filtredCameras, setFiltredCameras] = useState<Camera[]>([]);
   const [wordEntered, setWordEntered] = useState('');
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchAllCamerasAction());
   }, [dispatch]);
@@ -32,6 +32,16 @@ function FormSearch(): JSX.Element {
   };
 
   useKeydown('Escape', handleFormReset);
+
+  const handleItemClick = (id: number ) => {
+    navigate(`${AppRoute.Product}/${id}`);
+  };
+
+  const handleEnterKeyDown = (event: React.KeyboardEvent<HTMLLIElement>, id: number) => {
+    if(event.key === 'Enter') {
+      handleItemClick(id);
+    }
+  };
 
   return (
     <div className={wordEntered.length > 0 ? 'form-search list-opened' : 'form-search'}>
@@ -56,7 +66,9 @@ function FormSearch(): JSX.Element {
                 key={value.id}
                 className="form-search__select-item"
                 tabIndex={0}
-              ><Link to={`${AppRoute.Product}/${value.id}`}>{value.name}</Link>
+                onClick={() => handleItemClick(value.id)}
+                onKeyDown={(event) => handleEnterKeyDown(event, value.id)}
+              >{value.name}
               </li>
             ))
             : <li className="form-search__select-item">Не найдено</li>}
