@@ -8,22 +8,41 @@ import CatalogList from '../../components/catalog-list/catalog-list';
 import Pagination from '../../components/pagination/pagination';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectProductsTotalCount, selectCameras, selectIsCamerasLoaded } from '../../store/cameras-slice/selectorts';
+import { selectProductsTotalCount, selectCameras, selectIsCamerasLoaded, getIsAddItemStatus } from '../../store/cameras-slice/selectorts';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store/api-actions';
 import { PRODUCTS_COUNT, QueryParams, SearchParams, SortOrder, SortType } from '../../constants';
 import Loader from '../../components/loader/loader';
+import ItemAddModal from '../../components/item-add-modal/item-add-modal';
+import { selectBuyedCamera } from '../../store/camera-slice/selectors';
+import { Camera } from '../../types/camera';
 
 function CatalogScreen(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const [searchParams] = useSearchParams();
-
+  const [activePage, setActivePage] = useState(Number(id));
   const productsTotalCount = useAppSelector(selectProductsTotalCount);
   const isCamerasLoaded = useAppSelector(selectIsCamerasLoaded);
-  const [activePage, setActivePage] = useState(Number(id));
+  const cameras = useAppSelector(selectCameras);
+  const isAddItemStatus = useAppSelector(getIsAddItemStatus);
+  const buyedCamera = useAppSelector(selectBuyedCamera);
+  // eslint-disable-next-line no-console
+  console.log(buyedCamera);
+  const [buyedCameras, setBuyedCameras] = useState<Camera[]>([]);
+
+  const addBuyedCamera = (camera: Camera) => {
+    setBuyedCameras([...buyedCameras, camera]);
+  };
+
+  // eslint-disable-next-line no-console
+  console.log(buyedCameras);
+
+  const handleBuyButtonClick = () => {
+    addBuyedCamera(buyedCamera);
+  };
 
   useEffect(() => {
     dispatch(fetchPriceCamerasAction({
@@ -34,7 +53,7 @@ function CatalogScreen(): JSX.Element {
       [QueryParams.Level]: searchParams.getAll(SearchParams.Level),
     }));
   }, [dispatch, searchParams, id]);
-  const cameras = useAppSelector(selectCameras);
+
   useEffect(() => {
     dispatch(fetchCamerasByParamsAction({
       [QueryParams.Limit]: PRODUCTS_COUNT,
@@ -96,6 +115,7 @@ function CatalogScreen(): JSX.Element {
               </div>
             </section>
           </div>
+          <ItemAddModal buyedCamera={buyedCamera} isAddItemStatus={isAddItemStatus} handleBuyButtonClick={handleBuyButtonClick}/>
         </main>
 
         <Footer />

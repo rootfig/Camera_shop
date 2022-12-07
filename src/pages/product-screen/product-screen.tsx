@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { fetchCameraAction, fetchReviewsAction, fetchSimilarAction } from '../../store/api-actions';
 import { useEffect, useState } from 'react';
-import { selectCamera } from '../../store/camera-slice/selectors';
+import { selectBuyedCamera, selectCamera } from '../../store/camera-slice/selectors';
 import ReviewForm from '../../components/review/review-form/review-form';
 import { selectIsReviewSuccessOpen, selectReviews } from '../../store/reviews-slice/selectors';
 import { REVIEWS_COUNT } from '../../constants';
@@ -17,6 +17,8 @@ import { Review } from '../../types/review';
 import UpButton from '../../components/up-button/up-button';
 import ReviewSuccess from '../../components/review/review-success/review-success';
 import { fetchSuccessModalAction } from '../../store/reviews-slice/reviews-slice';
+import { getIsAddItemStatus } from '../../store/cameras-slice/selectorts';
+import ItemAddModal from '../../components/item-add-modal/item-add-modal';
 
 function ProductScreen(): JSX.Element {
   const params = useParams();
@@ -26,7 +28,8 @@ function ProductScreen(): JSX.Element {
   const reviewsData = useAppSelector(selectReviews);
   const reviews = [...reviewsData].sort((a, b) => (a.createAt > b.createAt ? -1 : 1));
   const isReviewSuccessOpen = useAppSelector(selectIsReviewSuccessOpen);
-
+  const isAddItemStatus = useAppSelector(getIsAddItemStatus);
+  const buyedCamera = useAppSelector(selectBuyedCamera);
   const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
 
   useEffect(() => {
@@ -42,7 +45,6 @@ function ProductScreen(): JSX.Element {
   };
 
   const handleReviewSuccessButtonClick = () => {
-
     dispatch(fetchSuccessModalAction());
   };
 
@@ -73,6 +75,7 @@ function ProductScreen(): JSX.Element {
           <UpButton />
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
           <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} isReviewSuccessOpen={isReviewSuccessOpen} />
+          <ItemAddModal buyedCamera={buyedCamera} isAddItemStatus={isAddItemStatus}/>
         </main>
 
         <Footer />

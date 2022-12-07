@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
+import BasketScreen from '../../pages/basket-screen/basket-screen';
 import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
@@ -28,6 +29,10 @@ function App(): JSX.Element {
       <Route
         path="*"
         element={ <NotFoundScreen /> }
+      />
+      <Route
+        path={AppRoute.Basket}
+        element={<BasketScreen />}
       />
     </Routes>
 

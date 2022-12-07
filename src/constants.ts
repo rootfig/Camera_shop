@@ -15,6 +15,7 @@ export const AppRoute = {
   Main: '/',
   Catalog: '/catalog',
   Product: '/product',
+  Basket: '/basket',
 };
 
 export enum APIRoute {

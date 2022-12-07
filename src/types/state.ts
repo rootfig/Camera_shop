@@ -19,6 +19,7 @@ export type CamerasSliceState = {
   productsTotalCount: number;
   productsPriceRange: ProductPriceRange;
   isFilterReset: boolean;
+  isAddItemStatus: boolean;
 }
 
 export type SimilarSliceState = {
@@ -29,6 +30,7 @@ export type SimilarSliceState = {
 
 export type CameraSliceState = {
   camera: Camera;
+  buyedCamera: Camera;
   isLoaded: boolean;
   isLoadError: boolean;
 }

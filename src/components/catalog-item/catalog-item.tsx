@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
+import { useAppDispatch } from '../../hooks';
+import { getBuyedProduct } from '../../store/camera-slice/camera-slice';
+import { changeIsAddItemStatus } from '../../store/cameras-slice/cameras-slice';
 import { Camera } from '../../types/camera';
 
 type CatalogItemProps = {
@@ -8,6 +11,12 @@ type CatalogItemProps = {
 
 function CatalogItem({camera}: CatalogItemProps): JSX.Element {
   const { id, name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+  const dispatch = useAppDispatch();
+
+  const handleBuyButtonClick = () => {
+    dispatch(changeIsAddItemStatus(true));
+    dispatch(getBuyedProduct(camera));
+  };
 
   return (
     <div className="product-card" data-testid='product-card'>
@@ -52,9 +61,15 @@ function CatalogItem({camera}: CatalogItemProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button
+          className="btn btn--purple product-card__btn"
+          type="button"
+          onClick={handleBuyButtonClick}
+        >
+          Купить
         </button>
-        <Link className="btn btn--transparent" to={ `${AppRoute.Product}/${id}` }>Подробнее
+        <Link className="btn btn--transparent" to={ `${AppRoute.Product}/${id}` }>
+          Подробнее
         </Link>
       </div>
     </div>
