@@ -1,3 +1,6 @@
+import { useAppDispatch } from '../../hooks';
+import { getBuyedProduct } from '../../store/camera-slice/camera-slice';
+import { changeIsAddItemStatus } from '../../store/cameras-slice/cameras-slice';
 import { Camera } from '../../types/camera';
 import TabMenu from '../tab-menu/tab-menu';
 
@@ -6,8 +9,13 @@ type ProductCardProps = {
 }
 
 function ProductCard({camera}: ProductCardProps): JSX.Element {
-
   const { name, rating, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount } = camera;
+  const dispatch = useAppDispatch();
+
+  const handleBuyButtonClick = () => {
+    dispatch(changeIsAddItemStatus(true));
+    dispatch(getBuyedProduct(camera));
+  };
 
   return (
     <div className="page-content__section">
@@ -50,7 +58,11 @@ function ProductCard({camera}: ProductCardProps): JSX.Element {
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{ reviewCount }</p>
             </div>
             <p className="product__price"><span className="visually-hidden">Цена:</span>{ price } ₽</p>
-            <button className="btn btn--purple" type="button">
+            <button
+              className="btn btn--purple"
+              type="button"
+              onClick={handleBuyButtonClick}
+            >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину

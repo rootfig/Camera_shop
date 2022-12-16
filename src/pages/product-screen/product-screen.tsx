@@ -1,22 +1,26 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ProductCard from '../../components/product-card/product-card';
 import SimilarList from '../../components/similars-list/similars-list';
 import Reviews from '../../components/review/reviews';
+import ReviewForm from '../../components/review/review-form/review-form';
+import UpButton from '../../components/up-button/up-button';
+import ReviewSuccess from '../../components/review/review-success/review-success';
+import ItemAddModal from '../../components/item-add-modal/item-add-modal';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { fetchCameraAction, fetchReviewsAction, fetchSimilarAction } from '../../store/api-actions';
-import { useEffect, useState } from 'react';
-import { selectCamera } from '../../store/camera-slice/selectors';
-import ReviewForm from '../../components/review/review-form/review-form';
 import { selectIsReviewSuccessOpen, selectReviews } from '../../store/reviews-slice/selectors';
+import { fetchSuccessModalAction } from '../../store/reviews-slice/reviews-slice';
+import { getIsAddItemStatus } from '../../store/cameras-slice/selectorts';
+import { selectCamera } from '../../store/camera-slice/selectors';
+import { useEffect, useState } from 'react';
 import { REVIEWS_COUNT } from '../../constants';
 import { Review } from '../../types/review';
-import UpButton from '../../components/up-button/up-button';
-import ReviewSuccess from '../../components/review/review-success/review-success';
-import { fetchSuccessModalAction } from '../../store/reviews-slice/reviews-slice';
+import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import { selectIsAddSuccessItemStatus } from '../../store/basket-slice/selectors';
 
 function ProductScreen(): JSX.Element {
   const params = useParams();
@@ -26,8 +30,9 @@ function ProductScreen(): JSX.Element {
   const reviewsData = useAppSelector(selectReviews);
   const reviews = [...reviewsData].sort((a, b) => (a.createAt > b.createAt ? -1 : 1));
   const isReviewSuccessOpen = useAppSelector(selectIsReviewSuccessOpen);
-
+  const isAddItemStatus = useAppSelector(getIsAddItemStatus);
   const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
+  const isAddSuccessItemStatus = useAppSelector(selectIsAddSuccessItemStatus);
 
   useEffect(() => {
     if (cameraId) {
@@ -42,7 +47,6 @@ function ProductScreen(): JSX.Element {
   };
 
   const handleReviewSuccessButtonClick = () => {
-
     dispatch(fetchSuccessModalAction());
   };
 
@@ -73,6 +77,8 @@ function ProductScreen(): JSX.Element {
           <UpButton />
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
           <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} isReviewSuccessOpen={isReviewSuccessOpen} />
+          <ItemAddModal isAddItemStatus={isAddItemStatus} />
+          <CatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
         </main>
 
         <Footer />

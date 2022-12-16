@@ -14,12 +14,16 @@ export const initialState: CamerasSliceState = {
     maxPrice: 0,
   },
   isFilterReset: false,
+  isAddItemStatus: false,
 };
 
 export const camerasSlice = createSlice({
   name: NameSpace.Cameras,
   initialState,
   reducers: {
+    changeIsAddItemStatus: (state, action) => {
+      state.isAddItemStatus = action.payload as boolean;
+    },
     changeIsFilterReset: (state, action) => {
       state.isFilterReset = action.payload as boolean;
     }
@@ -51,4 +55,4 @@ export const camerasSlice = createSlice({
   },
 });
 
-export const {changeIsFilterReset} = camerasSlice.actions;
+export const {changeIsFilterReset, changeIsAddItemStatus} = camerasSlice.actions;

@@ -9,3 +9,4 @@ export const selectProductsTotalCount = (state: State): number => state[NameSpac
 export const selectPriceProducts = (state: State): ProductPriceRange => state[NameSpace.Cameras].productsPriceRange;
 
 export const getIsFilterReset = (state: State): boolean => state[NameSpace.Cameras].isFilterReset;
+export const getIsAddItemStatus = (state: State): boolean => state[NameSpace.Cameras].isAddItemStatus;

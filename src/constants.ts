@@ -15,6 +15,7 @@ export const AppRoute = {
   Main: '/',
   Catalog: '/catalog',
   Product: '/product',
+  Basket: '/basket',
 };
 
 export enum APIRoute {
@@ -29,6 +30,7 @@ export enum NameSpace {
   Promo = 'PROMO',
   Similar = 'SIMILAR',
   Reviews = 'REVIEWS',
+  Basket = 'BASKET',
 }
 
 export enum TabName {
