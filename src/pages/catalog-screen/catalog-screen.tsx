@@ -15,11 +15,10 @@ import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store
 import { PRODUCTS_COUNT, QueryParams, SearchParams, SortOrder, SortType } from '../../constants';
 import Loader from '../../components/loader/loader';
 import ItemAddModal from '../../components/item-add-modal/item-add-modal';
-import { selectBuyedCamera } from '../../store/camera-slice/selectors';
-import { Camera } from '../../types/camera';
+import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import { selectIsAddSuccessItemStatus } from '../../store/basket-slice/selectors';
 
 function CatalogScreen(): JSX.Element {
-
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const [searchParams] = useSearchParams();
@@ -28,21 +27,7 @@ function CatalogScreen(): JSX.Element {
   const isCamerasLoaded = useAppSelector(selectIsCamerasLoaded);
   const cameras = useAppSelector(selectCameras);
   const isAddItemStatus = useAppSelector(getIsAddItemStatus);
-  const buyedCamera = useAppSelector(selectBuyedCamera);
-  // eslint-disable-next-line no-console
-  console.log(buyedCamera);
-  const [buyedCameras, setBuyedCameras] = useState<Camera[]>([]);
-
-  const addBuyedCamera = (camera: Camera) => {
-    setBuyedCameras([...buyedCameras, camera]);
-  };
-
-  // eslint-disable-next-line no-console
-  console.log(buyedCameras);
-
-  const handleBuyButtonClick = () => {
-    addBuyedCamera(buyedCamera);
-  };
+  const isAddSuccessItemStatus = useAppSelector(selectIsAddSuccessItemStatus);
 
   useEffect(() => {
     dispatch(fetchPriceCamerasAction({
@@ -72,7 +57,6 @@ function CatalogScreen(): JSX.Element {
     Math.ceil(productsTotalCount / PRODUCTS_COUNT)
   ), [productsTotalCount]);
 
-
   return(
     <HelmetProvider>
       <div className="wrapper">
@@ -82,15 +66,12 @@ function CatalogScreen(): JSX.Element {
         </Helmet>
 
         <Header />
-
         <main>
 
           <Banner />
-
           <div className="page-content">
 
             <Breadcrumbs />
-
             <section className="catalog">
               <div className="container">
                 <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
@@ -101,25 +82,22 @@ function CatalogScreen(): JSX.Element {
                     <div className="catalog__content">
 
                       <CatalogSort />
-
                       <CatalogList cameras={cameras} />
-
                       <Pagination
                         currentPage={Number(id)}
                         setActivePage={setActivePage}
                         totalPages={totalPages}
                       />
-
                     </div>}
                 </div>
               </div>
             </section>
           </div>
-          <ItemAddModal buyedCamera={buyedCamera} isAddItemStatus={isAddItemStatus} handleBuyButtonClick={handleBuyButtonClick}/>
+          <ItemAddModal isAddItemStatus={isAddItemStatus}/>
+          <CatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
         </main>
 
         <Footer />
-
       </div>
     </HelmetProvider>
   );

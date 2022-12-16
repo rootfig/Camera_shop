@@ -27,12 +27,12 @@ function App(): JSX.Element {
         element={ <ProductScreen /> }
       />
       <Route
-        path="*"
-        element={ <NotFoundScreen /> }
-      />
-      <Route
         path={AppRoute.Basket}
         element={<BasketScreen />}
+      />
+      <Route
+        path="*"
+        element={ <NotFoundScreen /> }
       />
     </Routes>
 

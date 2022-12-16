@@ -30,6 +30,7 @@ export enum NameSpace {
   Promo = 'PROMO',
   Similar = 'SIMILAR',
   Reviews = 'REVIEWS',
+  Basket = 'BASKET',
 }
 
 export enum TabName {

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import Basket from './basket/basket';
+import HeaderBasket from './header-basket/header-basket';
 import FormSearch from './form-search/form-search';
 
 
@@ -27,7 +27,7 @@ function Header(): JSX.Element {
           </ul>
         </nav>
         <FormSearch />
-        <Basket />
+        <HeaderBasket />
       </div>
     </header>
   );
