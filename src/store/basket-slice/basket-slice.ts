@@ -10,9 +10,13 @@ type initialStateType = {
   isCameraInBasket: boolean;
   isAddSuccessItemStatus: boolean;
   isRemoveItemStatus: boolean;
+  isCouponLoaded: boolean;
+  isCouponLoadError: boolean;
   isLoaded: boolean;
   isLoadError: boolean;
   order: OrderPost;
+  discount: number;
+  isOrderPostStatus: boolean;
 }
 const initialState: initialStateType = {
   itemsInBasket: [],
@@ -37,10 +41,14 @@ const initialState: initialStateType = {
   isRemoveItemStatus: false,
   isLoaded: false,
   isLoadError: false,
+  isCouponLoaded: true,
+  isCouponLoadError: false,
+  isOrderPostStatus: false,
   order: {
     camerasIds: [],
     coupon: null
-  }
+  },
+  discount: 0,
 };
 
 export const basketSlice = createSlice({
@@ -72,20 +80,27 @@ export const basketSlice = createSlice({
     setOrderPost: (state, action) => {
       state.order.camerasIds = action.payload as [];
     },
+    setOrderPostCoupon: (state, action) => {
+      state.order.coupon = action.payload as '' | null;
+    },
+    changeIsOrderPostStatus: (state, action) => {
+      state.isOrderPostStatus = action.payload as boolean;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(postCouponAction.pending, (state) => {
-        state.isLoaded = true;
-        state.isLoadError = false;
+        state.isCouponLoaded = true;
+        state.isCouponLoadError = false;
       })
       .addCase(postCouponAction.fulfilled, (state, action) => {
-        state.isLoaded = false;
-        state.isLoadError = false;
+        state.discount = action.payload;
+        state.isCouponLoaded = false;
+        state.isCouponLoadError = false;
       })
       .addCase(postCouponAction.rejected, (state) => {
-        state.isLoaded = false;
-        state.isLoadError = true;
+        state.isCouponLoaded = false;
+        state.isCouponLoadError = true;
       })
       .addCase(postOrderAction.pending, (state) => {
         state.isLoaded = true;
@@ -102,4 +117,4 @@ export const basketSlice = createSlice({
   }
 });
 
-export const { deleteItemFromBasket, addItemInBasket, setOrderPost, setItemInGarbage, changeIsRemoveItemStatus, changeIsAddSuccessItemStatus, setItemsInBasket, deleteItemsFromBasket } = basketSlice.actions;
+export const {changeIsOrderPostStatus, setOrderPostCoupon, deleteItemFromBasket, addItemInBasket, setOrderPost, setItemInGarbage, changeIsRemoveItemStatus, changeIsAddSuccessItemStatus, setItemsInBasket, deleteItemsFromBasket } = basketSlice.actions;

@@ -11,14 +11,15 @@ import { Camera } from '../../types/camera';
 import * as _ from 'lodash';
 import { useEffect } from 'react';
 import { getProductsCount } from '../../utils/utils';
+import BasketSuccess from '../../components/basket-success/basket-success';
 
 function BasketScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrdersInBasket);
   const removedItem = useAppSelector(selectOrderInGarbage);
   const isRemoveItemStatus = useAppSelector(selectIsRemoveItemStatus);
-  const ordersId = orders.map((item) => item.id);
-  const productsCount = getProductsCount(ordersId);
+  const ordersIds = orders.map((item) => item.id);
+  const productsCount = getProductsCount(ordersIds);
 
   // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
   const ordersTypeInBasket = (_.uniqWith(orders, _.isEqual));
@@ -40,8 +41,8 @@ function BasketScreen(): JSX.Element {
   useEffect(() => {
     const result = JSON.stringify(orders);
     localStorage.setItem('order', result);
-    dispatch(setOrderPost(ordersId));
-  },[dispatch, ordersId, orders]);
+    dispatch(setOrderPost(ordersIds));
+  },[dispatch, ordersIds, orders]);
 
   return (
     <HelmetProvider>
@@ -101,6 +102,7 @@ function BasketScreen(): JSX.Element {
             isRemoveItemStatus={isRemoveItemStatus}
             handleRemoveButtonClick={handleRemoveButtonClick}
           />
+          <BasketSuccess />
         </main>
         <Footer />
       </div>
