@@ -6,12 +6,12 @@ import browserHistory from './browser-history';
 import App from './components/app/app';
 import HistoryRouter from './components/history-router/history-router';
 import { store } from './store';
-import { setItemInBasket } from './store/basket-slice/basket-slice';
+import { setItemsInBasket } from './store/basket-slice/basket-slice';
 import { Camera } from './types/camera';
 
 const storage = localStorage.getItem('order') as string;
 const orders = JSON.parse(storage) as Camera[];
-store.dispatch(setItemInBasket(orders));
+store.dispatch(setItemsInBasket(orders));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

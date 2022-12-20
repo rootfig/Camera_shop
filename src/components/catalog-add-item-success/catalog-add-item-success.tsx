@@ -19,7 +19,7 @@ function CatalogAddItemSuccess({ isAddSuccessItemStatus }: CatalogAddItemSuccess
   return (
     <div className={ isAddSuccessItemStatus ? 'modal is-active modal--narrow' : 'modal modal--narrow' }>
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" onClick={() => dispatch(changeIsAddSuccessItemStatus(false))}></div>
         <div className="modal__content">
           <p className="title title--h4">Товар успешно добавлен в корзину</p>
           <svg className="modal__icon" width="86" height="80" aria-hidden="true">

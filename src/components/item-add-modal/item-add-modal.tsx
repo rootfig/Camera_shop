@@ -4,7 +4,7 @@ import { changeIsAddItemStatus } from '../../store/cameras-slice/cameras-slice';
 import { Camera } from '../../types/camera';
 import { selectBuyedCamera } from '../../store/camera-slice/selectors';
 import useLocalStorage from '../../hooks/use-local-storage';
-import { changeIsAddSuccessItemStatus, setItemInBasket } from '../../store/basket-slice/basket-slice';
+import { changeIsAddSuccessItemStatus, setItemsInBasket } from '../../store/basket-slice/basket-slice';
 import { useEffect } from 'react';
 
 type ItemAddModalType = {
@@ -22,7 +22,7 @@ function ItemAddModal({ isAddItemStatus }: ItemAddModalType): JSX.Element {
   };
 
   useEffect(() => {
-    dispatch(setItemInBasket(order));
+    dispatch(setItemsInBasket(order));
   },[dispatch, order]);
 
   const handleAddToOrderButtonClick = () => {

@@ -1,19 +1,31 @@
+// import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
+// import useLocalStorage from '../../hooks/use-local-storage';
 import { changeIsRemoveItemStatus, setItemInGarbage } from '../../store/basket-slice/basket-slice';
 import { Camera } from '../../types/camera';
+import { ProductCount } from '../../types/product-count';
 
 type BasketItemProps = {
   order: Camera;
+  productsCount: ProductCount;
+  handleNextButtonClick: (order: Camera) => void;
+  handlePrevButtonClick: (item: number) => void;
 }
 
-function BasketItem({ order }: BasketItemProps) {
+function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevButtonClick }: BasketItemProps) {
   const { name, vendorCode, price, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = order;
   const dispatch = useAppDispatch();
-
+  let quantity = 0;
   const handleConfirmRemoveButtonClick = () => {
     dispatch(changeIsRemoveItemStatus(true));
     dispatch(setItemInGarbage(order));
   };
+
+  for (const [id, count] of Object.entries(productsCount)) {
+    if(Number(id) === order.id){
+      quantity = Number(count);
+    }
+  }
 
   return (
     <li className="basket-item">
@@ -36,20 +48,20 @@ function BasketItem({ order }: BasketItemProps) {
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{ price } ₽</p>
       <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
+        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => handlePrevButtonClick(order.id)}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" value="1" min="1" max="99" aria-label="количество товара" />
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
+        < input type="number" id="counter1" value={ quantity } min="1" max="99" aria-label="количество товара" />
+        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={() => handleNextButtonClick(order)}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * quantity}</div>
       <button
         className="cross-btn"
         type="button"

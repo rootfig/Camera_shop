@@ -6,10 +6,10 @@ import { Camera } from '../../types/camera';
 type BasketRemoveItemProps = {
   isRemoveItemStatus: boolean;
   removedItem: Camera;
-  handleDeleteButtonClick: (order: Camera) => void;
+  handleRemoveButtonClick: (order: Camera) => void;
 }
 
-function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleDeleteButtonClick }: BasketRemoveItemProps): JSX.Element {
+function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveButtonClick }: BasketRemoveItemProps): JSX.Element {
   const { name, vendorCode, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = removedItem;
   const dispatch = useAppDispatch();
 
@@ -48,7 +48,7 @@ function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleDeleteButtonC
             <button
               className="btn btn--purple modal__btn modal__btn--half-width"
               type="button"
-              onClick={() => handleDeleteButtonClick(removedItem)}
+              onClick={() => handleRemoveButtonClick(removedItem)}
             >Удалить
             </button>
             <button

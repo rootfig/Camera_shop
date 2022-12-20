@@ -1,4 +1,4 @@
 export type OrderPost = {
   camerasIds: [];
-  coupon: [] | null;
+  coupon: '' | null;
 }
