@@ -19,7 +19,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
   const isCouponLoadError = useAppSelector(selectIsCouponLoadError);
   const IsCouponLoaded = useAppSelector(selectIsCouponLoaded);
   const orderPost = useAppSelector(selectOrderPost);
-
+  const isValidCoupon = (!isCouponLoadError && !IsCouponLoaded);
   const handleInputPromo = (evt: ChangeEvent<HTMLInputElement>) => {
     setInputValue(evt.target.value.replace(/^ +| +$|( ) +/g, '$1'));
   };
@@ -27,6 +27,9 @@ function BasketSummary({ orders }: BasketSummaryProps) {
     evt.preventDefault();
     dispatch(postCouponAction(inputValue));
     dispatch(setOrderPostCoupon(inputValue));
+    if(!isValidCoupon) {
+      dispatch(setOrderPostCoupon(null));
+    }
   };
   const handlePostOrderClick = () => {
     dispatch(postOrderAction(orderPost));
@@ -45,7 +48,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
                 <input type="text" name="promo" placeholder="Введите промокод" onChange={ handleInputPromo }/>
               </label>
               { isCouponLoadError ? <p className="custom-input__error" >Промокод неверный</p> : null}
-              { (!isCouponLoadError && !IsCouponLoaded) ? <p className="custom-input__success" >Промокод принят!</p> : null}
+              { isValidCoupon ? <p className="custom-input__success" >Промокод принят!</p> : null}
             </div>
             <button className="btn" type="submit" >Применить
             </button>
