@@ -1,6 +1,4 @@
-// import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
-// import useLocalStorage from '../../hooks/use-local-storage';
 import { changeIsRemoveItemStatus, setItemInGarbage } from '../../store/basket-slice/basket-slice';
 import { Camera } from '../../types/camera';
 import { ProductCount } from '../../types/product-count';
@@ -48,14 +46,14 @@ function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevBut
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{ price } ₽</p>
       <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => handlePrevButtonClick(order.id)}>
+        <button disabled={quantity === 1} className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => handlePrevButtonClick(order.id)}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
         < input type="number" id="counter1" value={ quantity } min="1" max="99" aria-label="количество товара" />
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={() => handleNextButtonClick(order)}>
+        <button disabled={quantity === 99} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={() => handleNextButtonClick(order)}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
