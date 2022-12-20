@@ -10,7 +10,7 @@ function HeaderBasket(): JSX.Element {
       <svg width="16" height="16" aria-hidden="true">
         <use xlinkHref="#icon-basket"></use>
       </svg>
-      {orders.length > 0 ? <span className="header__basket-count">{ orders.length }</span> : null}
+      { orders.length > 0 && <span className="header__basket-count">{ orders.length }</span> }
     </Link>
   );
 }
