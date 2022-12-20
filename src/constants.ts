@@ -21,7 +21,9 @@ export const AppRoute = {
 export enum APIRoute {
   Cameras = '/cameras',
   Promo = '/promo',
-  Reviews = '/reviews'
+  Reviews = '/reviews',
+  Coupon = '/coupons',
+  Order = '/orders',
 }
 
 export enum NameSpace {

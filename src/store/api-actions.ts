@@ -6,6 +6,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
+import { OrderPost } from '../types/order-post';
+import { toast } from 'react-toastify';
 
 const ApiAction = {
   FetchAllCameras: 'data/fetchAllCameras',
@@ -111,5 +113,33 @@ export const fetchPriceCamerasAction = createAsyncThunk<Camera[], CamerasPayload
   async (params, {dispatch, extra: api}) => {
     const {data} = await api.get<Camera[]>(APIRoute.Cameras, {params});
     return data;
+  },
+);
+
+export const postCouponAction = createAsyncThunk<number, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/couponPost',
+  async(value, {extra: api}) => {
+    const {data} = await api.post<number>(APIRoute.Coupon, {coupon: value});
+    return data;
+  },
+);
+
+export const postOrderAction = createAsyncThunk<void, OrderPost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/orderPost',
+  async(order, {extra: api}) => {
+    try {
+      await api.post<OrderPost>(APIRoute.Order, order);
+    } catch (error) {
+      toast.error('Failed to send order. Try again later');
+      throw(error);
+    }
   },
 );

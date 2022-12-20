@@ -5,23 +5,43 @@ import BasketSummary from '../../components/basket-summary/basket-summary';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeIsRemoveItemStatus, setItemInBasket } from '../../store/basket-slice/basket-slice';
+import { addItemInBasket, changeIsRemoveItemStatus, deleteItemFromBasket, setItemsInBasket, setOrderPost } from '../../store/basket-slice/basket-slice';
 import { selectIsRemoveItemStatus, selectOrderInGarbage, selectOrdersInBasket } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
+import * as _ from 'lodash';
+import { useEffect } from 'react';
+import { getProductsCount } from '../../utils/utils';
 
 function BasketScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrdersInBasket);
   const removedItem = useAppSelector(selectOrderInGarbage);
   const isRemoveItemStatus = useAppSelector(selectIsRemoveItemStatus);
+  const ordersId = orders.map((item) => item.id);
+  const productsCount = getProductsCount(ordersId);
 
-  const handleDeleteButtonClick = (order: Camera) => {
+  // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
+  const ordersTypeInBasket = (_.uniqWith(orders, _.isEqual));
+
+  const handleNextButtonClick = (order: Camera) => {
+    dispatch(addItemInBasket(order));
+  };
+
+  const handlePrevButtonClick = (id: number) => {
+    dispatch(deleteItemFromBasket(id));
+  };
+
+  const handleRemoveButtonClick = (order: Camera) => {
     const ordersAfterRemove = orders.filter((item) => item !== order);
-    dispatch(setItemInBasket(ordersAfterRemove));
-    const result = JSON.stringify(ordersAfterRemove);
-    localStorage.setItem('order', result);
+    dispatch(setItemsInBasket(ordersAfterRemove));
     dispatch(changeIsRemoveItemStatus(false));
   };
+
+  useEffect(() => {
+    const result = JSON.stringify(orders);
+    localStorage.setItem('order', result);
+    dispatch(setOrderPost(ordersId));
+  },[dispatch, ordersId, orders]);
 
   return (
     <HelmetProvider>
@@ -59,9 +79,12 @@ function BasketScreen(): JSX.Element {
               <div className="container">
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
-                  {orders.length !== 0 ? orders.map((order) =>
+                  {ordersTypeInBasket.length !== 0 ? ordersTypeInBasket.map((order) =>
                     (
                       <BasketItem
+                        handlePrevButtonClick={handlePrevButtonClick}
+                        handleNextButtonClick={handleNextButtonClick}
+                        productsCount={productsCount}
                         key={order.id}
                         order={order}
                       />
@@ -76,7 +99,7 @@ function BasketScreen(): JSX.Element {
           <BasketRemoveItem
             removedItem={removedItem}
             isRemoveItemStatus={isRemoveItemStatus}
-            handleDeleteButtonClick={handleDeleteButtonClick}
+            handleRemoveButtonClick={handleRemoveButtonClick}
           />
         </main>
         <Footer />
