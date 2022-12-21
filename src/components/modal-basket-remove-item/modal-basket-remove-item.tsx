@@ -9,7 +9,7 @@ type BasketRemoveItemProps = {
   handleRemoveButtonClick: (order: Camera) => void;
 }
 
-function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveButtonClick }: BasketRemoveItemProps): JSX.Element {
+function ModalBasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveButtonClick }: BasketRemoveItemProps): JSX.Element {
   const { name, vendorCode, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = removedItem;
   const dispatch = useAppDispatch();
 
@@ -21,7 +21,7 @@ function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveButtonC
 
   return (
     <div className={ isRemoveItemStatus ? 'modal is-active' : 'modal'}>
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid='basket-remove-item'>
         <div className="modal__overlay" onClick={handleCloseButtonClick}></div>
         <div className="modal__content">
           <p className="title title--h4">Удалить этот товар?</p>
@@ -72,6 +72,6 @@ function BasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveButtonC
   );
 }
 
-export default BasketRemoveItem;
+export default ModalBasketRemoveItem;
 
 

@@ -17,6 +17,22 @@ describe('Reducer: cameraSlice', () => {
       expect(cameraSlice.reducer(state, {type: fetchCameraAction.fulfilled.type, payload: camera}))
         .toEqual({
           camera: camera,
+          buyedCamera: {
+            id: 0,
+            name: '',
+            vendorCode: '',
+            type: '',
+            category: '',
+            description: '',
+            level: '',
+            rating: 0,
+            price: 0,
+            previewImg: '',
+            previewImg2x: '',
+            previewImgWebp: '',
+            previewImgWebp2x: '',
+            reviewCount: 0
+          },
           isLoaded: false,
           isLoadError: false,
         });
@@ -41,6 +57,22 @@ describe('Reducer: cameraSlice', () => {
             previewImgWebp2x: '',
             reviewCount: 0
           },
+          buyedCamera: {
+            id: 0,
+            name: '',
+            vendorCode: '',
+            type: '',
+            category: '',
+            description: '',
+            level: '',
+            rating: 0,
+            price: 0,
+            previewImg: '',
+            previewImg2x: '',
+            previewImgWebp: '',
+            previewImgWebp2x: '',
+            reviewCount: 0
+          },
           isLoaded: true,
           isLoadError: false,
         });
@@ -50,6 +82,22 @@ describe('Reducer: cameraSlice', () => {
       expect(cameraSlice.reducer(state, {type: fetchCameraAction.rejected.type}))
         .toEqual({
           camera: {
+            id: 0,
+            name: '',
+            vendorCode: '',
+            type: '',
+            category: '',
+            description: '',
+            level: '',
+            rating: 0,
+            price: 0,
+            previewImg: '',
+            previewImg2x: '',
+            previewImgWebp: '',
+            previewImgWebp2x: '',
+            reviewCount: 0
+          },
+          buyedCamera: {
             id: 0,
             name: '',
             vendorCode: '',
