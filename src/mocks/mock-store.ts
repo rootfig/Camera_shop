@@ -26,6 +26,7 @@ export const store = mockStore({
   CAMERA: {
     camera: camera,
     isLoaded: false,
+    buyedCamera: camera,
   },
   REVIEWS: {
     reviews: reviews,
@@ -40,5 +41,22 @@ export const store = mockStore({
     similars: cameras,
     isLoaded: false,
     isLoadError: false,
+  },
+  BASKET: {
+    itemsInBasket: [],
+    itemInGarbage: camera,
+    isCameraInBasket: false,
+    isAddSuccessItemStatus: false,
+    isRemoveItemStatus: false,
+    isLoaded: false,
+    isLoadError: false,
+    isCouponLoaded: true,
+    isCouponLoadError: false,
+    isOrderPostStatus: false,
+    order: {
+      camerasIds: [],
+      coupon: null
+    },
+    discount: 0,
   }
 });

@@ -26,6 +26,7 @@ describe('Reducer: camerasSlice', () => {
             maxPrice: 0,
           },
           isFilterReset: false,
+          isAddItemStatus: false,
         });
     });
 
@@ -42,6 +43,7 @@ describe('Reducer: camerasSlice', () => {
             maxPrice: 0,
           },
           isFilterReset: false,
+          isAddItemStatus: false,
         });
     });
 
@@ -58,6 +60,7 @@ describe('Reducer: camerasSlice', () => {
             maxPrice: 0,
           },
           isFilterReset: false,
+          isAddItemStatus: false,
         });
     });
   });

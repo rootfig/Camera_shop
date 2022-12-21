@@ -26,7 +26,7 @@ function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevBut
   }
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid='basket-item'>
       <div className="basket-item__img">
         <picture>
           <source type="image/webp" srcSet={`../${ previewImgWebp }, ../${ previewImgWebp2x }`} />

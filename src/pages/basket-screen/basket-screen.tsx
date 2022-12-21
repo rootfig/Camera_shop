@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import BasketItem from '../../components/basket-item/basket-item';
-import BasketRemoveItem from '../../components/basket-remove-item/basket-remove-item';
+import ModalBasketRemoveItem from '../../components/modal-basket-remove-item/modal-basket-remove-item';
 import BasketSummary from '../../components/basket-summary/basket-summary';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -11,7 +11,9 @@ import { Camera } from '../../types/camera';
 import * as _ from 'lodash';
 import { useEffect } from 'react';
 import { getProductsCount } from '../../utils/utils';
-import BasketSuccess from '../../components/basket-success/basket-success';
+import BasketSuccess from '../../components/modal-basket-success/modal-basket-success';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants';
 
 function BasketScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -58,18 +60,18 @@ function BasketScreen(): JSX.Element {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="index.html">Главная
+                    <Link className="breadcrumbs__link" to={AppRoute.Main}>Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="catalog.html">Каталог
+                    <Link className="breadcrumbs__link" to={`${AppRoute.Catalog}/1`}>Каталог
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
                   </li>
@@ -97,7 +99,7 @@ function BasketScreen(): JSX.Element {
               </div>
             </section>
           </div>
-          <BasketRemoveItem
+          <ModalBasketRemoveItem
             removedItem={removedItem}
             isRemoveItemStatus={isRemoveItemStatus}
             handleRemoveButtonClick={handleRemoveButtonClick}
