@@ -4,7 +4,7 @@ import { Camera } from '../../types/camera';
 import { OrderPost } from '../../types/order-post';
 import { postCouponAction, postOrderAction } from '../api-actions';
 
-type initialStateType = {
+export type initialStateType = {
   itemsInBasket: Camera[];
   itemInGarbage: Camera;
   isCameraInBasket: boolean;
@@ -18,7 +18,7 @@ type initialStateType = {
   discount: number;
   isOrderPostStatus: boolean;
 }
-const initialState: initialStateType = {
+export const initialState: initialStateType = {
   itemsInBasket: [],
   itemInGarbage:{
     id: 0,

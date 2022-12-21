@@ -15,7 +15,7 @@ import { fetchCamerasByParamsAction, fetchPriceCamerasAction } from '../../store
 import { PRODUCTS_COUNT, QueryParams, SearchParams, SortOrder, SortType } from '../../constants';
 import Loader from '../../components/loader/loader';
 import ItemAddModal from '../../components/item-add-modal/item-add-modal';
-import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import ModalCatalogAddItemSuccess from '../../components/modal-catalog-add-item-success/modal-catalog-add-item-success';
 import { selectIsAddSuccessItemStatus } from '../../store/basket-slice/selectors';
 
 function CatalogScreen(): JSX.Element {
@@ -94,7 +94,7 @@ function CatalogScreen(): JSX.Element {
             </section>
           </div>
           <ItemAddModal isAddItemStatus={isAddItemStatus}/>
-          <CatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
+          <ModalCatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
         </main>
 
         <Footer />

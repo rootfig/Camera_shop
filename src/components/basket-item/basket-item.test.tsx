@@ -7,7 +7,7 @@ import HistoryRouter from '../history-router/history-router';
 import BasketItem from './basket-item';
 
 
-describe('Component: Footer', () => {
+describe('Component: BasketItem', () => {
   it ('should render corectly', () => {
     const history = createMemoryHistory();
 

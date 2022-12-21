@@ -11,7 +11,7 @@ import { Camera } from '../../types/camera';
 import * as _ from 'lodash';
 import { useEffect } from 'react';
 import { getProductsCount } from '../../utils/utils';
-import BasketSuccess from '../../components/modal-basket-success/modal-basket-success';
+import ModalBasketSuccess from '../../components/modal-basket-success/modal-basket-success';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 
@@ -48,7 +48,7 @@ function BasketScreen(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <div className="wrapper">
+      <div className="wrapper" data-testid='basket-screen'>
         <Helmet>
           <title>Корзина - Фотошоп</title>
           <meta name="description" content="Фотошоп — Интернет-магазин фото- и видеотехники" />
@@ -104,7 +104,7 @@ function BasketScreen(): JSX.Element {
             isRemoveItemStatus={isRemoveItemStatus}
             handleRemoveButtonClick={handleRemoveButtonClick}
           />
-          <BasketSuccess />
+          <ModalBasketSuccess />
         </main>
         <Footer />
       </div>

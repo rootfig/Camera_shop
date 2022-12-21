@@ -38,7 +38,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
   // eslint-disable-next-line no-console
   console.log((!isCouponLoadError && !IsCouponLoaded));
   return (
-    <div className="basket__summary">
+    <div className="basket__summary" data-testid='basket-summary'>
       <div className="basket__promo">
         <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
         <div className="basket-form">

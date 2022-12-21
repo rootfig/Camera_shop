@@ -6,7 +6,7 @@ import { Camera } from '../../types/camera';
 import HistoryRouter from '../history-router/history-router';
 import ModalBasketRemoveItem from './modal-basket-remove-item';
 
-describe('Component: Footer', () => {
+describe('Component: ModalBasketRemoveItem', () => {
   it ('should render corectly', () => {
     const history = createMemoryHistory();
 
