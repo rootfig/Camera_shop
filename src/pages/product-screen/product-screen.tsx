@@ -19,7 +19,7 @@ import { selectCamera } from '../../store/camera-slice/selectors';
 import { useEffect, useState } from 'react';
 import { REVIEWS_COUNT } from '../../constants';
 import { Review } from '../../types/review';
-import CatalogAddItemSuccess from '../../components/catalog-add-item-success/catalog-add-item-success';
+import ModalCatalogAddItemSuccess from '../../components/modal-catalog-add-item-success/modal-catalog-add-item-success';
 import { selectIsAddSuccessItemStatus } from '../../store/basket-slice/selectors';
 
 function ProductScreen(): JSX.Element {
@@ -78,7 +78,7 @@ function ProductScreen(): JSX.Element {
           { isAddReviewModalOpen && <ReviewForm setActive={setIsAddReviewModalOpen} cameraId={cameraId}/>}
           <ReviewSuccess handleReviewSuccessButtonClick={handleReviewSuccessButtonClick} isReviewSuccessOpen={isReviewSuccessOpen} />
           <ItemAddModal isAddItemStatus={isAddItemStatus} />
-          <CatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
+          <ModalCatalogAddItemSuccess isAddSuccessItemStatus={isAddSuccessItemStatus} />
         </main>
 
         <Footer />

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeIsOrderPostStatus } from '../../store/basket-slice/basket-slice';
 import { selectIsOrderPostStatus } from '../../store/basket-slice/selectors';
 
-function BasketSuccess() {
+function ModalBasketSuccess() {
   const isOrderPostStatus = useAppSelector(selectIsOrderPostStatus);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ function BasketSuccess() {
 
   return (
     <div className={ isOrderPostStatus ? 'modal is-active modal--narrow' : 'modal modal--narrow'}>
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid='modal-basket-success'>
         <div className="modal__overlay" onClick={handleCloseButtonClick}></div>
         <div className="modal__content">
           <p className="title title--h4">Спасибо за покупку</p>
@@ -42,4 +42,4 @@ function BasketSuccess() {
   );
 }
 
-export default BasketSuccess;
+export default ModalBasketSuccess;

@@ -3,23 +3,20 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { store } from '../../mocks/mock-store';
 import HistoryRouter from '../history-router/history-router';
-import Pagination from './pagination';
+import ModalBasketSuccess from './modal-basket-success';
 
-describe('Component: Pagination', () => {
+describe('Component: ModalBasketSuccess', () => {
   it ('should render corectly', () => {
     const history = createMemoryHistory();
 
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <Pagination currentPage={0} setActivePage={function (_arg: number): void {
-            throw new Error('Function not implemented.');
-          } } totalPages={0}
-          />
+          <ModalBasketSuccess />
         </HistoryRouter>
       </Provider>
     );
 
-    expect(screen.getByTestId('pagination')).toBeInTheDocument();
+    expect(screen.getByTestId('modal-basket-success')).toBeInTheDocument();
   });
 });

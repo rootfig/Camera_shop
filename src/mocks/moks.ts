@@ -1,5 +1,6 @@
 import { commerce, datatype, image, name } from 'faker';
 import { Camera } from '../types/camera';
+import { OrderPost } from '../types/order-post';
 import { Promo } from '../types/promo';
 import { Review } from '../types/review';
 import { ReviewPost } from '../types/review-post';
@@ -57,4 +58,11 @@ export const makeFakeAddReview = (): ReviewPost => ({
   disadvantage: datatype.string(),
   review: datatype.string(),
   rating: datatype.number({min: 1, max: 5}),
+});
+
+export const makeFakeOrderPost = (): OrderPost => ({
+
+  camerasIds: [1,2,3],
+  coupon: null
+
 });

@@ -4,10 +4,10 @@ import { useAppDispatch } from '../../hooks';
 import useKeydown from '../../hooks/use-keydown';
 import { changeIsAddSuccessItemStatus } from '../../store/basket-slice/basket-slice';
 
-type CatalogAddItemSuccessType = {
+type ModalCatalogAddItemSuccessProps = {
   isAddSuccessItemStatus: boolean;
 }
-function CatalogAddItemSuccess({ isAddSuccessItemStatus }: CatalogAddItemSuccessType) {
+function ModalCatalogAddItemSuccess({ isAddSuccessItemStatus }: ModalCatalogAddItemSuccessProps) {
   const dispatch = useAppDispatch();
 
   const handleCloseButtonClick = () => {
@@ -18,7 +18,7 @@ function CatalogAddItemSuccess({ isAddSuccessItemStatus }: CatalogAddItemSuccess
 
   return (
     <div className={ isAddSuccessItemStatus ? 'modal is-active modal--narrow' : 'modal modal--narrow' }>
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid='modal-catalog-add-item-success'>
         <div className="modal__overlay" onClick={() => dispatch(changeIsAddSuccessItemStatus(false))}></div>
         <div className="modal__content">
           <p className="title title--h4">Товар успешно добавлен в корзину</p>
@@ -49,4 +49,4 @@ function CatalogAddItemSuccess({ isAddSuccessItemStatus }: CatalogAddItemSuccess
   );
 }
 
-export default CatalogAddItemSuccess;
+export default ModalCatalogAddItemSuccess;
