@@ -44,7 +44,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
           <form onSubmit={handleDiscountSubmit}>
             <div className="custom-input">
               <label><span className="custom-input__label">Промокод</span>
-                <input type="text" name="promo" placeholder="Введите промокод" onChange={ handleInputPromo } pattern="camera-333|camera-444|camera-555" title="Убедитель что промокод верный"/>
+                <input type="text" name="promo" placeholder="Введите промокод" onChange={ handleInputPromo } pattern="[a-z,0-9,-]+" title="Убедитель что промокод верный"/>
               </label>
               { isCouponLoadError ? <p className="custom-input__error" >Промокод неверный</p> : null}
               { isValidCoupon ? <p className="custom-input__success" >Промокод принят!</p> : null}
