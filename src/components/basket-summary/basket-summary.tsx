@@ -21,8 +21,9 @@ function BasketSummary({ orders }: BasketSummaryProps) {
   const orderPost = useAppSelector(selectOrderPost);
   const isValidCoupon = (!isCouponLoadError && !IsCouponLoaded);
   const handleInputPromo = (evt: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(evt.target.value.replace(/^ +| \S* +$|() +/g, '$1'));
+    setInputValue(evt.target.value);
   };
+
   const handleDiscountSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(postCouponAction(inputValue));
