@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
+import { useAppDispatch } from '../../hooks';
+import { getBuyedProduct } from '../../store/camera-slice/camera-slice';
+import { changeIsAddItemStatus } from '../../store/cameras-slice/cameras-slice';
 import { Camera } from '../../types/camera';
 
 type SimilarItemProps = {
@@ -7,8 +10,14 @@ type SimilarItemProps = {
 }
 
 function SimilarItem({ similar }: SimilarItemProps):JSX.Element {
-
   const {id, price, previewImgWebp, previewImgWebp2x, reviewCount, rating, category, name} = similar;
+  const dispatch = useAppDispatch();
+
+  const handleBuyButtonClick = () => {
+    dispatch(changeIsAddItemStatus(true));
+    dispatch(getBuyedProduct(similar));
+  };
+
   return (
     <div className="product-card is-active" data-testid='similar-item'>
       <div className="product-card__img">
@@ -42,7 +51,7 @@ function SimilarItem({ similar }: SimilarItemProps):JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleBuyButtonClick}>Купить
         </button>
         <Link className="btn btn--transparent" to={ `${AppRoute.Product}/${id}` }>Подробнее
         </Link>
