@@ -11,7 +11,7 @@ function HeaderBasket(): JSX.Element {
       <svg width="16" height="16" aria-hidden="true">
         <use xlinkHref="#icon-basket"></use>
       </svg>
-      { (ordersCount > 0 && ordersCount !== null) && <span className="header__basket-count">{ ordersCount }</span> }
+      { (ordersCount > 0 && orders !== null) && <span className="header__basket-count">{ ordersCount }</span> }
     </Link>
   );
 }
