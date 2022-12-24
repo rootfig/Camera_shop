@@ -11,3 +11,7 @@ export const selectIsCouponLoadError = (state: State) => state[NameSpace.Basket]
 export const selectIsCouponLoaded = (state: State) => state[NameSpace.Basket].isCouponLoaded;
 export const selectOrderPost = (state: State) => state[NameSpace.Basket].order;
 export const selectIsOrderPostStatus = (state: State) => state[NameSpace.Basket].isOrderPostStatus;
+
+export const selectIsLoadErrorPostOrder = (state: State) => state[NameSpace.Basket].isLoadError;
+export const selectIsLoadedPostOrder = (state: State) => state[NameSpace.Basket].isLoaded;
+export const selectIsPostOrderDone = (state: State) => state[NameSpace.Basket].isLoadDone;

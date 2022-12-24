@@ -8,7 +8,7 @@ import HistoryRouter from './components/history-router/history-router';
 import { store } from './store';
 import { setItemsInBasket } from './store/basket-slice/basket-slice';
 import { Camera } from './types/camera';
-
+import 'react-toastify/dist/ReactToastify.css';
 const storage = localStorage.getItem('order') as string;
 const orders = JSON.parse(storage) as Camera[];
 store.dispatch(setItemsInBasket(orders));

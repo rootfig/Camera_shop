@@ -1,4 +1,5 @@
 import { Review } from '../../types/review';
+import AddReviewButton from './add-review-button/add-review-button';
 import MoreReviewButton from './more-review-button/more-review-button';
 import ReviewItem from './review-item/review-item';
 
@@ -14,15 +15,9 @@ function Reviews({reviews, reviewsListCount, handleAddReviewButtonClick, onChang
     <div className="page-content__section" data-testid='review'>
       <section className="review-block">
         <div className="container">
-          <div className="page-content__headed">
-            <h2 className="title title--h3">Отзывы</h2>
-            <button
-              className="btn"
-              type="button"
-              onClick={() => handleAddReviewButtonClick()}
-            >Оставить свой отзыв
-            </button>
-          </div>
+          <AddReviewButton
+            handleAddReviewButtonClick={handleAddReviewButtonClick}
+          />
           <ul className="review-block__list">
             {reviews.map((review) =>
               (

@@ -10,7 +10,7 @@ import { selectIsRemoveItemStatus, selectOrderInGarbage, selectOrdersInBasket } 
 import { Camera } from '../../types/camera';
 import * as _ from 'lodash';
 import { useEffect } from 'react';
-import { getProductsCount } from '../../utils/utils';
+import { compareNumbers, getProductsCount } from '../../utils/utils';
 import ModalBasketSuccess from '../../components/modal-basket-success/modal-basket-success';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
@@ -24,7 +24,8 @@ function BasketScreen(): JSX.Element {
   const productsCount = getProductsCount(ordersIds);
 
   // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
-  const ordersTypeInBasket = (_.uniqWith(orders, _.isEqual));
+  const ordersType = (_.uniqWith(orders, _.isEqual));
+  const ordersTypeInBasket = ordersType.sort(compareNumbers);
 
   const handleNextButtonClick = (order: Camera) => {
     dispatch(addItemInBasket(order));

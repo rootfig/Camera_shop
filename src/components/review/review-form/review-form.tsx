@@ -8,10 +8,11 @@ import { ReviewPost } from '../../../types/review-post';
 
 type ReviewFormProps = {
   setActive: (value: boolean) => void;
+  isAddReviewModalOpen: boolean;
   cameraId: number;
 }
 
-function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
+function ReviewForm({ setActive, isAddReviewModalOpen, cameraId }: ReviewFormProps): JSX.Element {
   useKeydown('Escape', () => setActive(false));
   const dispatch = useAppDispatch();
 
@@ -51,7 +52,7 @@ function ReviewForm({ setActive, cameraId }: ReviewFormProps): JSX.Element {
   };
 
   return (
-    <div className="modal is-active" data-testid='review-form'>
+    <div className={ isAddReviewModalOpen ? 'modal is-active' : 'modal'} data-testid='review-form'>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={() => setActive(false)}></div>
         <div className="modal__content">

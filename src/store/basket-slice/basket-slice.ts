@@ -17,6 +17,7 @@ export type initialStateType = {
   order: OrderPost;
   discount: number;
   isOrderPostStatus: boolean;
+  isLoadDone: boolean;
 }
 export const initialState: initialStateType = {
   itemsInBasket: [],
@@ -44,6 +45,7 @@ export const initialState: initialStateType = {
   isCouponLoaded: true,
   isCouponLoadError: false,
   isOrderPostStatus: false,
+  isLoadDone: false,
   order: {
     camerasIds: [],
     coupon: null
@@ -109,10 +111,11 @@ export const basketSlice = createSlice({
       .addCase(postOrderAction.fulfilled, (state) => {
         state.isLoaded = false;
         state.isLoadError = false;
+        state.isLoadDone = true;
       })
       .addCase(postOrderAction.rejected, (state) => {
-        state.isLoaded = true;
-        state.isLoadError = false;
+        state.isLoaded = false;
+        state.isLoadError = true;
       });
   }
 });
