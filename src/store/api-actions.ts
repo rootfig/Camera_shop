@@ -138,7 +138,7 @@ export const postOrderAction = createAsyncThunk<void, OrderPost, {
     try {
       await api.post<OrderPost>(APIRoute.Order, order);
     } catch (error) {
-      toast.error('Failed to send order. Try again later');
+      toast.error('Заказ не отправлен, произошла ошибка, проверьте карзину или напишите нам.');
       throw(error);
     }
   },

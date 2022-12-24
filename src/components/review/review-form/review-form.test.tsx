@@ -14,7 +14,7 @@ describe('Component: ReviewForm', () => {
         <HistoryRouter history={history}>
           <ReviewForm setActive={function (value: boolean): void {
             throw new Error('Function not implemented.');
-          } } cameraId={0}
+          } } cameraId={0} isAddReviewModalOpen={false}
           />
         </HistoryRouter>
       </Provider>

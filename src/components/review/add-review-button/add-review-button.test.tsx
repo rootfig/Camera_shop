@@ -12,7 +12,10 @@ describe('Component: AddReviewButton', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <AddReviewButton/>
+          <AddReviewButton handleAddReviewButtonClick={function (): void {
+            throw new Error('Function not implemented.');
+          } }
+          />
         </HistoryRouter>
       </Provider>
     );
