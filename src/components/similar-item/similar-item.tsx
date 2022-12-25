@@ -16,6 +16,7 @@ function SimilarItem({ similar }: SimilarItemProps):JSX.Element {
   const handleBuyButtonClick = () => {
     dispatch(changeIsAddItemStatus(true));
     dispatch(getBuyedProduct(similar));
+    document.body.style.overflow = 'hidden';
   };
 
   return (

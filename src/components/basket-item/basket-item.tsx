@@ -14,9 +14,11 @@ function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevBut
   const { name, vendorCode, price, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = order;
   const dispatch = useAppDispatch();
   let quantity = 0;
+
   const handleConfirmRemoveButtonClick = () => {
     dispatch(changeIsRemoveItemStatus(true));
     dispatch(setItemInGarbage(order));
+    document.body.style.overflow = 'hidden';
   };
 
   for (const [id, count] of Object.entries(productsCount)) {

@@ -13,6 +13,7 @@ function ModalCatalogAddItemSuccess({ isAddSuccessItemStatus }: ModalCatalogAddI
 
   const handleCloseButtonClick = () => {
     dispatch(changeIsAddSuccessItemStatus(false));
+    document.body.style.overflow = 'scroll';
   };
 
   useKeydown('Escape', () => dispatch(changeIsAddSuccessItemStatus(false)));

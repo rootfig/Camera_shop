@@ -42,8 +42,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
       dispatch(changeIsOrderPostStatus(true));
     }
   };
-  // eslint-disable-next-line no-console
-  console.log(isPostOrderDone);
+
   return (
     <div className="basket__summary" data-testid='basket-summary'>
       <div className="basket__promo">
