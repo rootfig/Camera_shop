@@ -5,7 +5,7 @@ import { Camera } from '../types/camera';
 import { ProductCount } from '../types/product-count';
 
 export const getProductSlice = (items: Camera[]) => items.slice(0, PRODUCTS_COUNT);
-export const calcTotalPrice = (items: Camera[]) => items.reduce((acc, item) => (acc += item.price), 0);
+export const calcTotalPrice = (items: Camera[]) => items ? items.reduce((acc, item) => (acc += item.price), 0) : 0;
 export const humanizeCommentDate = (date: string) => {
 
   dayjs().locale('ru-bg');
