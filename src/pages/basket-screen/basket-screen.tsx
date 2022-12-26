@@ -15,6 +15,7 @@ import ModalBasketSuccess from '../../components/modal-basket-success/modal-bask
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 
+
 function BasketScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectOrdersInBasket);
@@ -22,7 +23,6 @@ function BasketScreen(): JSX.Element {
   const isRemoveItemStatus = useAppSelector(selectIsRemoveItemStatus);
   const ordersIds = orders.map((item) => item.id);
   const productsCount = getProductsCount(ordersIds);
-
   // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
   const ordersType = (_.uniqWith(orders, _.isEqual));
   const ordersTypeInBasket = ordersType.sort(compareNumbers);
@@ -39,6 +39,8 @@ function BasketScreen(): JSX.Element {
     const ordersAfterRemove = orders.filter((item) => item !== order);
     dispatch(setItemsInBasket(ordersAfterRemove));
     dispatch(changeIsRemoveItemStatus(false));
+    document.body.style.overflow = 'scroll';
+
   };
 
   useEffect(() => {

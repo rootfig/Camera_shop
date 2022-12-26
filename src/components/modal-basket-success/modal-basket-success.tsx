@@ -41,7 +41,7 @@ function ModalBasketSuccess() {
           </div>
         </div>
       </div>
-    </ ReactFocusLock>
+    </ReactFocusLock>
   );
 }
 

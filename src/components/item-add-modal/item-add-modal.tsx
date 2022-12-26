@@ -31,18 +31,25 @@ function ItemAddModal({ isAddItemStatus }: ItemAddModalType): JSX.Element {
     addToOrder(targetCamera);
     dispatch(changeIsAddItemStatus(false));
     dispatch(changeIsAddSuccessItemStatus(true));
+    document.body.style.overflow = 'hidden';
   };
 
   const handleCloseButtonClick = () => {
     dispatch(changeIsAddItemStatus(false));
+    document.body.style.overflow = 'scroll';
   };
 
-  useKeydown('Escape', () => dispatch(changeIsAddItemStatus(false)));
+  useKeydown('Escape', () => {
+    dispatch(changeIsAddItemStatus(false));
+    document.body.style.overflow = 'scroll';
+  });
+
   const {setFocus} = useForm();
 
   useEffect(() => {
     setFocus('modal__btn--fit-width');
   },[setFocus]);
+
   return (
     <ReactFocusLock>
       <div className={isAddItemStatus ? 'modal is-active' : 'modal'}>

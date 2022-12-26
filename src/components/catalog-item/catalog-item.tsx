@@ -17,6 +17,7 @@ function CatalogItem({ camera, isCameraInBasket }: CatalogItemProps): JSX.Elemen
   const handleBuyButtonClick = () => {
     dispatch(changeIsAddItemStatus(true));
     dispatch(getBuyedProduct(camera));
+    document.body.style.overflow = 'hidden';
   };
 
   return (

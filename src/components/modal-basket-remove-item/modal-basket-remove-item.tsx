@@ -16,14 +16,19 @@ function ModalBasketRemoveItem({ isRemoveItemStatus, removedItem, handleRemoveBu
 
   const handleCloseButtonClick = () => {
     dispatch(changeIsRemoveItemStatus(false));
+    document.body.style.overflow = 'scroll';
   };
 
-  useKeydown('Escape', () => dispatch(changeIsRemoveItemStatus(false)));
+  useKeydown('Escape', () => {
+    dispatch(changeIsRemoveItemStatus(false));
+    document.body.style.overflow = 'scroll';
+  });
 
   return (
     <ReactFocusLock>
       <div className={ isRemoveItemStatus ? 'modal is-active' : 'modal'}>
         <div className="modal__wrapper" data-testid='basket-remove-item'>
+
           <div className="modal__overlay" onClick={handleCloseButtonClick}></div>
           <div className="modal__content">
             <p className="title title--h4">Удалить этот товар?</p>
