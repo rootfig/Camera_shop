@@ -20,7 +20,7 @@ function ItemAddModal({ isAddItemStatus }: ItemAddModalType): JSX.Element {
   const [order , setOrder ] = useLocalStorage<Camera[]>('order', []);
 
   const addToOrder = (camera: Camera) => {
-    setOrder([...order, camera]);
+    (camera !== null) ? setOrder([...order, camera]) : setOrder([]);
   };
 
   useEffect(() => {
