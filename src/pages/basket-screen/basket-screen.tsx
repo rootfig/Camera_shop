@@ -9,7 +9,7 @@ import { addItemInBasket, changeIsRemoveItemStatus, deleteItemFromBasket, setIte
 import { selectIsRemoveItemStatus, selectOrderInGarbage, selectOrdersInBasket } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
 import * as _ from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { compareNumbers, getProductsCount } from '../../utils/utils';
 import ModalBasketSuccess from '../../components/modal-basket-success/modal-basket-success';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,9 @@ function BasketScreen(): JSX.Element {
   const orders = useAppSelector(selectOrdersInBasket);
   const removedItem = useAppSelector(selectOrderInGarbage);
   const isRemoveItemStatus = useAppSelector(selectIsRemoveItemStatus);
-  const ordersIds = orders.map((item) => item.id);
+  let ordersIds: number[] = useMemo(() => [], []);
+  orders ? ordersIds = orders.map((item) => item.id) : ordersIds = [];
+
   const productsCount = getProductsCount(ordersIds);
   // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
   const ordersType = (_.uniqWith(orders, _.isEqual));
@@ -47,7 +49,7 @@ function BasketScreen(): JSX.Element {
     const result = JSON.stringify(orders);
     localStorage.setItem('order', result);
     dispatch(setOrderPost(ordersIds));
-  },[dispatch, ordersIds, orders]);
+  },[dispatch, orders, ordersIds]);
 
   return (
     <HelmetProvider>

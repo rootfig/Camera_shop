@@ -13,7 +13,7 @@ function CatalogList( {cameras}: CatalogListProps ): JSX.Element {
     <div className="cards catalog__cards" data-testid='catalog__cards'>
       {
         cameras.map((camera) => {
-          const isCameraInBasket = orders.some((order) => camera.id === order.id);
+          const isCameraInBasket = orders ? orders.some((order) => camera.id === order.id) : false;
           return (
             <CatalogItem
               key={camera.id}
