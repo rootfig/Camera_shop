@@ -2,23 +2,25 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCouponAction, postOrderAction } from '../../store/api-actions';
 import { changeIsOrderPostStatus, setOrderPostCoupon } from '../../store/basket-slice/basket-slice';
-import { selectDiscount, selectIsCouponLoaded, selectIsCouponLoadError, selectIsLoadedPostOrder, selectIsLoadErrorPostOrder, selectIsPostOrderDone, selectOrderPost } from '../../store/basket-slice/selectors';
+import { selectDiscount, selectIsCouponLoaded, selectIsCouponLoadError, selectIsLoadedPostOrder, selectIsLoadErrorPostOrder, selectIsPostOrderDone } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
-import { calcTotalPrice } from '../../utils/utils';
 
 type BasketSummaryProps = {
-  orders: Camera[];
+  orders: {
+    camera: Camera;
+    count: number;
+    }[];
 }
+
 function BasketSummary({ orders }: BasketSummaryProps) {
   const dispatch = useAppDispatch();
   const coupon = useAppSelector(selectDiscount);
-  const totalPrice = calcTotalPrice(orders);
+  const totalPrice = orders?.reduce((summ, {camera, count}) => summ + camera.price * count, 0);
   const [inputValue, setInputValue] = useState('');
   const discount = coupon / 100;
   const totalDiscount = totalPrice * discount;
   const isCouponLoadError = useAppSelector(selectIsCouponLoadError);
   const IsCouponLoaded = useAppSelector(selectIsCouponLoaded);
-  const orderPost = useAppSelector(selectOrderPost);
   const isValidCoupon = (!isCouponLoadError && !IsCouponLoaded);
   const isLoadedErrorOrderPost = useAppSelector(selectIsLoadErrorPostOrder);
   const isLoadedOrderPost = useAppSelector(selectIsLoadedPostOrder);
@@ -37,7 +39,17 @@ function BasketSummary({ orders }: BasketSummaryProps) {
     }
   };
   const handlePostOrderClick = () => {
-    dispatch(postOrderAction(orderPost));
+    const ordersIds: number[] = [];
+    orders.forEach((item) => {
+      for (let i = 1; i <= item.count; i++) {
+        ordersIds.push(item.camera.id);
+      }
+    });
+    const order = {
+      camerasIds: ordersIds,
+      coupon: inputValue ? inputValue : null,
+    };
+    dispatch(postOrderAction(order));
     if( isPostOrderFullfild) {
       dispatch(changeIsOrderPostStatus(true));
     }

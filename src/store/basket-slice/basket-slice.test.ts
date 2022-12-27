@@ -1,12 +1,12 @@
 import { datatype } from 'faker';
-import { makeFakeCamera } from '../../mocks/moks';
+// import { makeFakeCamera } from '../../mocks/moks';
 
 
 import { postCouponAction } from '../api-actions';
-import { basketSlice, deleteItemFromBasket, initialState, initialStateType } from './basket-slice';
+import { basketSlice,initialState, initialStateType } from './basket-slice';
 
 const fakeDiscount = datatype.number(20);
-const fakeCamera = makeFakeCamera();
+
 
 const state: initialStateType = initialState;
 
@@ -44,18 +44,6 @@ describe('Reducer: basketSlice', () => {
           isCouponLoaded: false,
           isCouponLoadError: true,
         });
-    });
-  });
-
-  describe('Action: deleteItemFromBasket', () => {
-    it('should delete camera from camerasInBasket by deleteItemFromBasket', () => {
-      const customState = {
-        ...state,
-        itemsInBasket: [fakeCamera],
-      };
-
-      expect(basketSlice.reducer(customState, deleteItemFromBasket(fakeCamera.id)))
-        .toEqual({ ...customState, itemsInBasket: [] });
     });
   });
 

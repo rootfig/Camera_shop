@@ -1,31 +1,51 @@
-import { useAppDispatch } from '../../hooks';
-import { changeIsRemoveItemStatus, setItemInGarbage } from '../../store/basket-slice/basket-slice';
+import { ChangeEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeIsRemoveItemStatus, setCameraCount, setItemInGarbage } from '../../store/basket-slice/basket-slice';
+import { selectItemsCount } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
-import { ProductCount } from '../../types/product-count';
 
 type BasketItemProps = {
-  order: Camera;
-  productsCount: ProductCount;
-  handleNextButtonClick: (order: Camera) => void;
-  handlePrevButtonClick: (item: number) => void;
+  camera: Camera;
+  count: number;
 }
 
-function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevButtonClick }: BasketItemProps) {
-  const { name, vendorCode, price, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = order;
+function BasketItem({ camera, count }: BasketItemProps) {
+  const { name, vendorCode, price, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = camera;
   const dispatch = useAppDispatch();
-  let quantity = 0;
+  const itemsCount = useAppSelector(selectItemsCount);
+  const [,setQuantity] = useState(itemsCount);
+
+  const handleQuantityChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (Number(evt.target.value) <= 0) {
+      setQuantity(1);
+      return;
+    }
+    if (Number(evt.target.value) > 99) {
+      setQuantity(99);
+      dispatch(setCameraCount({id: camera.id, value: 99}));
+      return;
+    }
+    setQuantity(Number(evt.target.value));
+    dispatch(setCameraCount({id: camera.id, value: Number(evt.target.value)}));
+  };
+
+  const handleIncreaseBtnClick = () => {
+    const cameraCountIncrease = count + 1;
+    setQuantity(cameraCountIncrease);
+    dispatch(setCameraCount({id: camera.id, value: cameraCountIncrease}));
+  };
+
+  const handleDecreaseBtnClick = () => {
+    const cameraCountDecrease = count - 1;
+    setQuantity(cameraCountDecrease);
+    dispatch(setCameraCount({id: camera.id, value: cameraCountDecrease}));
+  };
 
   const handleConfirmRemoveButtonClick = () => {
     dispatch(changeIsRemoveItemStatus(true));
-    dispatch(setItemInGarbage(order));
+    dispatch(setItemInGarbage(camera));
     document.body.style.overflow = 'hidden';
   };
-
-  for (const [id, count] of Object.entries(productsCount)) {
-    if(Number(id) === order.id){
-      quantity = Number(count);
-    }
-  }
 
   return (
     <li className="basket-item" data-testid='basket-item'>
@@ -48,20 +68,27 @@ function BasketItem({ order, productsCount, handleNextButtonClick, handlePrevBut
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{ price } ₽</p>
       <div className="quantity">
-        <button disabled={quantity === 1} className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => handlePrevButtonClick(order.id)}>
+        <button disabled={count === 1} className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={handleDecreaseBtnClick}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        < input type="number" id="counter1" value={ quantity } min="1" max="99" aria-label="количество товара" />
-        <button disabled={quantity === 99} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={() => handleNextButtonClick(order)}>
+        < input
+          onChange={handleQuantityChange}
+          type="number"
+          id="counter1"
+          value={ count }
+          min="1" max="99"
+          aria-label="количество товара"
+        />
+        <button disabled={count === 99} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={handleIncreaseBtnClick}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * quantity}</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * count}</div>
       <button
         className="cross-btn"
         type="button"

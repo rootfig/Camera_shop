@@ -1,11 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constants';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CAMERAS_COUNT_DEFAULT, ITEM_IN_GARBAGE_DEFAULT, NameSpace } from '../../constants';
 import { Camera } from '../../types/camera';
 import { OrderPost } from '../../types/order-post';
 import { postCouponAction, postOrderAction } from '../api-actions';
 
 export type initialStateType = {
-  itemsInBasket: Camera[];
+  itemsInBasket: {
+    camera: Camera;
+    count: number;
+    }[];
   itemInGarbage: Camera;
   isCameraInBasket: boolean;
   isAddSuccessItemStatus: boolean;
@@ -18,25 +21,11 @@ export type initialStateType = {
   discount: number;
   isOrderPostStatus: boolean;
   isLoadDone: boolean;
+  itemsCount: number;
 }
 export const initialState: initialStateType = {
   itemsInBasket: [],
-  itemInGarbage:{
-    id: 0,
-    name: '',
-    vendorCode: '',
-    type: '',
-    category: '',
-    description: '',
-    level: '',
-    rating: 0,
-    price: 0,
-    previewImg: '',
-    previewImg2x: '',
-    previewImgWebp: '',
-    previewImgWebp2x: '',
-    reviewCount: 0
-  },
+  itemInGarbage: ITEM_IN_GARBAGE_DEFAULT,
   isCameraInBasket: false,
   isAddSuccessItemStatus: false,
   isRemoveItemStatus: false,
@@ -51,27 +40,40 @@ export const initialState: initialStateType = {
     coupon: null
   },
   discount: 0,
+  itemsCount: 1,
 };
 
 export const basketSlice = createSlice({
   name: NameSpace.Basket,
   initialState,
   reducers: {
-    addItemInBasket: (state, action) => {
-      state.itemsInBasket.push(action.payload as Camera);
+    addItemInBasket: (state, action: PayloadAction<Camera>) => {
+      const index = (state.itemsInBasket || []).findIndex(({camera}) => camera.id === action.payload.id);
+      if (index >= 0 || null) {
+        state.itemsInBasket[index].count++;
+        return;
+      }
+      state.itemsInBasket.push({
+        camera: action.payload,
+        count: CAMERAS_COUNT_DEFAULT,
+      });
+    },
+    setCameraCount: (state, action: PayloadAction<{id: number; value: number}>) => {
+      const index = state.itemsInBasket?.findIndex(({camera}) => camera.id === action.payload.id);
+      state.itemsInBasket[index].count = action.payload.value;
     },
     setItemsInBasket: (state, action) => {
-      state.itemsInBasket = action.payload as Camera[];
+      state.itemsInBasket = action.payload as {camera: Camera; count: number}[];
     },
     setItemInGarbage: (state, action) => {
       state.itemInGarbage = action.payload as Camera;
     },
     deleteItemFromBasket: (state, action) => {
-      const index = state.itemsInBasket.findIndex((item) => item.id === action.payload);
+      const index = state.itemsInBasket.findIndex((item) => item.camera.id === action.payload);
       state.itemsInBasket.splice(index, 1);
     },
     deleteItemsFromBasket: (state, action) => {
-      state.itemsInBasket = state.itemsInBasket.filter((camera) => camera.id !== action.payload);
+      state.itemsInBasket = state.itemsInBasket.filter((item) => item.camera.id !== action.payload);
     },
     changeIsAddSuccessItemStatus: (state, action) => {
       state.isAddSuccessItemStatus = action.payload as boolean;
@@ -120,4 +122,4 @@ export const basketSlice = createSlice({
   }
 });
 
-export const {changeIsOrderPostStatus, setOrderPostCoupon, deleteItemFromBasket, addItemInBasket, setOrderPost, setItemInGarbage, changeIsRemoveItemStatus, changeIsAddSuccessItemStatus, setItemsInBasket, deleteItemsFromBasket } = basketSlice.actions;
+export const {setItemsInBasket, setCameraCount, changeIsOrderPostStatus, setOrderPostCoupon, deleteItemFromBasket, addItemInBasket, setOrderPost, setItemInGarbage, changeIsRemoveItemStatus, changeIsAddSuccessItemStatus, deleteItemsFromBasket } = basketSlice.actions;
