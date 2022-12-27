@@ -15,7 +15,7 @@ function CatalogList( {cameras}: CatalogListProps ): JSX.Element {
   useEffect(() => {
     if (orders) {
       const result = JSON.stringify(orders);
-      localStorage.setItem('order', result);
+      localStorage.setItem('orders', result);
     }
   },[dispatch, orders]);
 
