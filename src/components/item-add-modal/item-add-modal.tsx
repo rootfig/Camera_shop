@@ -17,20 +17,8 @@ type ItemAddModalType = {
 function ItemAddModal({ isAddItemStatus }: ItemAddModalType): JSX.Element {
   const dispatch = useAppDispatch();
   const targetCamera = useAppSelector(selectBuyedCamera);
-  // const orderNew = useAppSelector(selectOrdersInBasket);
-  const {name, category, vendorCode, type, level, previewImgWebp, price, previewImgWebp2x, previewImg, previewImg2x} = targetCamera;
-  // const [order , setOrder ] = useLocalStorage<Camera[]>('order', []);
 
-  // const addToOrder = (camera: Camera) => {
-  //   (camera !== null && camera !== undefined) ? setOrder([...order, camera]) : setOrder([]);
-  // };
-  // eslint-disable-next-line no-console
-  console.log('Target camera: ', targetCamera);
-  // eslint-disable-next-line no-console
-  // console.log('Ордер из локалсторедж: ', order);
-  // useEffect(() => {
-  //   dispatch(setItemsInBasket(order));
-  // },[dispatch, order]);
+  const {name, category, vendorCode, type, level, previewImgWebp, price, previewImgWebp2x, previewImg, previewImg2x} = targetCamera;
 
   const handleAddToOrderButtonClick = () => {
 
