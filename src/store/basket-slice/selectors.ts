@@ -1,7 +1,7 @@
 import { NameSpace } from '../../constants';
 import { State } from '../../types/state';
 
-export const selectOrdersInBasket = (state: State) => state[NameSpace.Basket].itemsInBasket;
+export const selectOrdersInBasket = (state: State) => state[NameSpace.Basket].itemsInBasket || [];
 export const selectOrderInGarbage = (state: State) => state[NameSpace.Basket].itemInGarbage;
 export const selectIsCameraInBasket = (state: State) => state[NameSpace.Basket].isCameraInBasket;
 export const selectIsAddSuccessItemStatus = (state: State) => state[NameSpace.Basket].isAddSuccessItemStatus;
@@ -15,3 +15,4 @@ export const selectIsOrderPostStatus = (state: State) => state[NameSpace.Basket]
 export const selectIsLoadErrorPostOrder = (state: State) => state[NameSpace.Basket].isLoadError;
 export const selectIsLoadedPostOrder = (state: State) => state[NameSpace.Basket].isLoaded;
 export const selectIsPostOrderDone = (state: State) => state[NameSpace.Basket].isLoadDone;
+export const selectItemsCount = (state: State) => state[NameSpace.Basket].itemsCount;

@@ -13,7 +13,7 @@ describe('Component: CatalogItem', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <CatalogItem camera={makeFakeCamera()} isCameraInBasket/>
+          <CatalogItem camera={makeFakeCamera()} isCameraInBasket={false} />
         </HistoryRouter>
       </Provider>
     );

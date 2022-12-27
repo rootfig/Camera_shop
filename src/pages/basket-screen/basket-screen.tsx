@@ -5,12 +5,10 @@ import BasketSummary from '../../components/basket-summary/basket-summary';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addItemInBasket, changeIsRemoveItemStatus, deleteItemFromBasket, setItemsInBasket, setOrderPost } from '../../store/basket-slice/basket-slice';
+import { changeIsRemoveItemStatus, setItemsInBasket } from '../../store/basket-slice/basket-slice';
 import { selectIsRemoveItemStatus, selectOrderInGarbage, selectOrdersInBasket } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
-import * as _ from 'lodash';
-import { useEffect, useMemo } from 'react';
-import { compareNumbers, getProductsCount } from '../../utils/utils';
+import { useEffect } from 'react';
 import ModalBasketSuccess from '../../components/modal-basket-success/modal-basket-success';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
@@ -21,35 +19,20 @@ function BasketScreen(): JSX.Element {
   const orders = useAppSelector(selectOrdersInBasket);
   const removedItem = useAppSelector(selectOrderInGarbage);
   const isRemoveItemStatus = useAppSelector(selectIsRemoveItemStatus);
-  let ordersIds: number[] = useMemo(() => [], []);
-  orders ? ordersIds = orders.map((item) => item.id) : ordersIds = [];
-
-  const productsCount = getProductsCount(ordersIds);
-  // eslint-disable-next-line no-console, @typescript-eslint/unbound-method
-  const ordersType = (_.uniqWith(orders, _.isEqual));
-  const ordersTypeInBasket = ordersType.sort(compareNumbers);
-
-  const handleNextButtonClick = (order: Camera) => {
-    dispatch(addItemInBasket(order));
-  };
-
-  const handlePrevButtonClick = (id: number) => {
-    dispatch(deleteItemFromBasket(id));
-  };
 
   const handleRemoveButtonClick = (order: Camera) => {
-    const ordersAfterRemove = orders.filter((item) => item !== order);
+    const ordersAfterRemove = orders.filter((item) => item.camera !== order);
     dispatch(setItemsInBasket(ordersAfterRemove));
     dispatch(changeIsRemoveItemStatus(false));
     document.body.style.overflow = 'scroll';
-
   };
 
   useEffect(() => {
-    const result = JSON.stringify(orders);
-    localStorage.setItem('order', result);
-    dispatch(setOrderPost(ordersIds));
-  },[dispatch, orders, ordersIds]);
+    if (orders) {
+      const result = JSON.stringify(orders);
+      localStorage.setItem('order', result);
+    }
+  },[dispatch, orders]);
 
   return (
     <HelmetProvider>
@@ -87,14 +70,12 @@ function BasketScreen(): JSX.Element {
               <div className="container">
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
-                  {ordersTypeInBasket.length !== 0 ? ordersTypeInBasket.map((order) =>
+                  {(orders !== null && orders !== undefined) ? orders?.map(({camera, count}) =>
                     (
                       <BasketItem
-                        handlePrevButtonClick={handlePrevButtonClick}
-                        handleNextButtonClick={handleNextButtonClick}
-                        productsCount={productsCount}
-                        key={order.id}
-                        order={order}
+                        key={`basket-item-${camera.id}`}
+                        camera={camera}
+                        count={count}
                       />
                     )) : 'Корзина пуста'}
                 </ul>

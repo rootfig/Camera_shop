@@ -7,7 +7,7 @@ export const MAX_RATING = 5;
 export const RATING_VALUES = Array.from({ length: MAX_RATING }, (it, index) => index + 1).reverse();
 export const MIN_REVIEW_LENGTH = 5;
 export const SLIDER_STEP_COUNT = 3;
-export const CAMERAS_COUNT_DEFAULT = 0;
+export const CAMERAS_COUNT_DEFAULT = 1;
 export const START_PAGE_COUNT = 1;
 export const PAGE_STEP = 1;
 
@@ -115,4 +115,21 @@ export const FILTERS = [
 export const FILTER_RESTRICTION = {
   category: ['Видеокамера'],
   type: ['Плёночная', 'Моментальная']
+};
+
+export const ITEM_IN_GARBAGE_DEFAULT = {
+  id: 0,
+  name: '',
+  vendorCode: '',
+  type: '',
+  category: '',
+  description: '',
+  level: '',
+  rating: 0,
+  price: 0,
+  previewImg: '',
+  previewImg2x: '',
+  previewImgWebp: '',
+  previewImgWebp2x: '',
+  reviewCount: 0
 };

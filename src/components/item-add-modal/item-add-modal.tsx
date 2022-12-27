@@ -1,13 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useKeydown from '../../hooks/use-keydown';
 import { changeIsAddItemStatus } from '../../store/cameras-slice/cameras-slice';
-import { Camera } from '../../types/camera';
+// import { Camera } from '../../types/camera';
 import { selectBuyedCamera } from '../../store/camera-slice/selectors';
-import useLocalStorage from '../../hooks/use-local-storage';
-import { changeIsAddSuccessItemStatus, setItemsInBasket } from '../../store/basket-slice/basket-slice';
+// import useLocalStorage from '../../hooks/use-local-storage';
+import { addItemInBasket, changeIsAddSuccessItemStatus } from '../../store/basket-slice/basket-slice';
 import { useEffect } from 'react';
 import ReactFocusLock from 'react-focus-lock';
 import { useForm } from 'react-hook-form';
+// import { selectOrdersInBasket } from '../../store/basket-slice/selectors';
 
 type ItemAddModalType = {
   isAddItemStatus: boolean;
@@ -16,19 +17,25 @@ type ItemAddModalType = {
 function ItemAddModal({ isAddItemStatus }: ItemAddModalType): JSX.Element {
   const dispatch = useAppDispatch();
   const targetCamera = useAppSelector(selectBuyedCamera);
+  // const orderNew = useAppSelector(selectOrdersInBasket);
   const {name, category, vendorCode, type, level, previewImgWebp, price, previewImgWebp2x, previewImg, previewImg2x} = targetCamera;
-  const [order , setOrder ] = useLocalStorage<Camera[]>('order', []);
+  // const [order , setOrder ] = useLocalStorage<Camera[]>('order', []);
 
-  const addToOrder = (camera: Camera) => {
-    (camera !== null) ? setOrder([...order, camera]) : setOrder([]);
-  };
-
-  useEffect(() => {
-    dispatch(setItemsInBasket(order));
-  },[dispatch, order]);
+  // const addToOrder = (camera: Camera) => {
+  //   (camera !== null && camera !== undefined) ? setOrder([...order, camera]) : setOrder([]);
+  // };
+  // eslint-disable-next-line no-console
+  console.log('Target camera: ', targetCamera);
+  // eslint-disable-next-line no-console
+  // console.log('Ордер из локалсторедж: ', order);
+  // useEffect(() => {
+  //   dispatch(setItemsInBasket(order));
+  // },[dispatch, order]);
 
   const handleAddToOrderButtonClick = () => {
-    addToOrder(targetCamera);
+
+    dispatch(addItemInBasket(targetCamera));
+    // addToOrder(targetCamera);
     dispatch(changeIsAddItemStatus(false));
     dispatch(changeIsAddSuccessItemStatus(true));
     document.body.style.overflow = 'hidden';
