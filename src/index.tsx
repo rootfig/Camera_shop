@@ -10,8 +10,13 @@ import { setItemsInBasket } from './store/basket-slice/basket-slice';
 import { Camera } from './types/camera';
 import 'react-toastify/dist/ReactToastify.css';
 const storage = localStorage.getItem('order') as string;
-const orders = JSON.parse(storage) as Camera[];
-store.dispatch(setItemsInBasket(orders));
+const orders = JSON.parse(storage) as {camera: Camera; count: number}[];
+if (orders === null) {
+  store.dispatch(setItemsInBasket([]));
+
+}else {
+  store.dispatch(setItemsInBasket(orders));
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
