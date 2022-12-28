@@ -77,7 +77,7 @@ function BasketSummary({ orders }: BasketSummaryProps) {
         <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{ orders === null ? 0 : totalPrice.toLocaleString('ru-RU') } ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{ discount ? totalDiscount.toLocaleString('ru-RU') : 0} ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{ (totalPrice - totalDiscount).toLocaleString('ru-RU') } ₽</span></p>
-        <button disabled={orders === null || orders.length < 1} className="btn btn--purple" type="submit" onClick={ handlePostOrderClick }>Оформить заказ
+        <button disabled={orders === null || orders.length < 1 || totalPrice - totalDiscount === 0} className="btn btn--purple" type="submit" onClick={ handlePostOrderClick }>Оформить заказ
         </button>
       </div>
     </div>

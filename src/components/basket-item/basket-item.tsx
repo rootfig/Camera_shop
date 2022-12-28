@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { changeIsRemoveItemStatus, setCameraCount, setItemInGarbage } from '../../store/basket-slice/basket-slice';
-import { selectItemsCount } from '../../store/basket-slice/selectors';
 import { Camera } from '../../types/camera';
-
+const MIN_COUNT = 1;
+const MAX_COUNT = 99;
 type BasketItemProps = {
   camera: Camera;
   count: number;
@@ -12,32 +12,33 @@ type BasketItemProps = {
 function BasketItem({ camera, count }: BasketItemProps) {
   const { name, vendorCode, price, level, type, previewImg, category, previewImg2x, previewImgWebp, previewImgWebp2x } = camera;
   const dispatch = useAppDispatch();
-  const itemsCount = useAppSelector(selectItemsCount);
-  const [,setQuantity] = useState(itemsCount);
+  const [quantity ,setQuantity] = useState(String(count));
 
   const handleQuantityChange = (evt: ChangeEvent<HTMLInputElement>) => {
+
     if (Number(evt.target.value) <= 0) {
-      setQuantity(1);
+      setQuantity('');
+      dispatch(setCameraCount({id: camera.id, value: 0}));
       return;
     }
-    if (Number(evt.target.value) > 99) {
-      setQuantity(99);
+    if (Number(evt.target.value) > MAX_COUNT) {
+      setQuantity(String(MAX_COUNT));
       dispatch(setCameraCount({id: camera.id, value: 99}));
       return;
     }
-    setQuantity(Number(evt.target.value));
+    setQuantity(evt.target.value);
     dispatch(setCameraCount({id: camera.id, value: Number(evt.target.value)}));
   };
 
   const handleIncreaseBtnClick = () => {
     const cameraCountIncrease = count + 1;
-    setQuantity(cameraCountIncrease);
+    setQuantity(String(cameraCountIncrease));
     dispatch(setCameraCount({id: camera.id, value: cameraCountIncrease}));
   };
 
   const handleDecreaseBtnClick = () => {
     const cameraCountDecrease = count - 1;
-    setQuantity(cameraCountDecrease);
+    setQuantity(String(cameraCountDecrease));
     dispatch(setCameraCount({id: camera.id, value: cameraCountDecrease}));
   };
 
@@ -68,7 +69,7 @@ function BasketItem({ camera, count }: BasketItemProps) {
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{ price } ₽</p>
       <div className="quantity">
-        <button disabled={count === 1} className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={handleDecreaseBtnClick}>
+        <button disabled={count <= MIN_COUNT} className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={handleDecreaseBtnClick}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
@@ -78,11 +79,11 @@ function BasketItem({ camera, count }: BasketItemProps) {
           onChange={handleQuantityChange}
           type="number"
           id="counter1"
-          value={ count }
+          value={ quantity }
           min="1" max="99"
           aria-label="количество товара"
         />
-        <button disabled={count === 99} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={handleIncreaseBtnClick}>
+        <button disabled={count >= MAX_COUNT} className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={handleIncreaseBtnClick}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
