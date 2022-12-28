@@ -25,7 +25,6 @@ function BasketSummary({ orders }: BasketSummaryProps) {
   const isLoadedErrorOrderPost = useAppSelector(selectIsLoadErrorPostOrder);
   const isLoadedOrderPost = useAppSelector(selectIsLoadedPostOrder);
   const isPostOrderDone = useAppSelector(selectIsPostOrderDone);
-  const isPostOrderFullfild = (!isLoadedErrorOrderPost && !isLoadedOrderPost && isPostOrderDone);
   const handleInputPromo = (evt: ChangeEvent<HTMLInputElement>) => {
     setInputValue(evt.target.value);
   };
@@ -50,8 +49,14 @@ function BasketSummary({ orders }: BasketSummaryProps) {
       coupon: inputValue ? inputValue : null,
     };
     dispatch(postOrderAction(order));
-    if( isPostOrderFullfild) {
+    if (isLoadedOrderPost) {
+      dispatch(changeIsOrderPostStatus(false));
+    }
+    if (isPostOrderDone) {
       dispatch(changeIsOrderPostStatus(true));
+    }
+    if (isLoadedErrorOrderPost) {
+      dispatch(changeIsOrderPostStatus(false));
     }
   };
 

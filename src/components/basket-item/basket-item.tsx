@@ -29,7 +29,12 @@ function BasketItem({ camera, count }: BasketItemProps) {
     setQuantity(evt.target.value);
     dispatch(setCameraCount({id: camera.id, value: Number(evt.target.value)}));
   };
-
+  const handleFocusLost = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (!evt.target.value) {
+      setQuantity(String(MIN_COUNT));
+      dispatch(setCameraCount({id: camera.id, value: MIN_COUNT}));
+    }
+  };
   const handleIncreaseBtnClick = () => {
     const cameraCountIncrease = count + 1;
     setQuantity(String(cameraCountIncrease));
@@ -77,6 +82,7 @@ function BasketItem({ camera, count }: BasketItemProps) {
         <label className="visually-hidden" htmlFor="counter1"></label>
         < input
           onChange={handleQuantityChange}
+          onBlur={handleFocusLost}
           type="number"
           id="counter1"
           value={ quantity }
